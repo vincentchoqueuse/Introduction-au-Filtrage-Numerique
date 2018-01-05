@@ -1,0 +1,43 @@
+\begin{tikzpicture}
+\node at (0,4) [start] (start) {$x[n]$};
+\node at (2,0) [fgain] (gain3) {};
+\node at (3,2) [foperation] (op2) {$+$};
+\node at (1,1) [fbox] (delai2) {$z^{-1}$};
+\node at (2,2) [fgain] (gain2) {};
+\node at (3,4) [foperation] (op1) {$+$};
+\node at (1,3) [fbox] (delai1) {$z^{-1}$};
+\node at (2,4) [fgain] (gain1) {} ;
+\node[above of=gain1,node distance=1.5em]{$0.065$};
+\node[above of=gain2,node distance=1.5em]{$0.135$};
+\node[above of=gain3,node distance=1.5em]{$0.065$};
+
+\node at (7,1) [fbox] (delai22) {$z^{-1}$};
+\node at (6,0) [fgain,rotate=180] (gain22) {};
+\node at (7,3) [fbox] (delai21) {$z^{-1}$};
+\node at (5,2) [foperation] (op22) {$+$};
+\node at (6,2) [fgain,rotate=180] (gain21) {};
+\node at (5,4) [foperation] (op21) {$+$};
+\node at (8,4) [stop] (stop) {$y[n]$};
+\node[above of=gain21,node distance=1.5em]{$1.143$};
+\node[above of=gain22,node distance=1.5em]{$-0.413$};
+
+
+\draw[-] (start) -- (gain1);
+\draw[->,>=latex] (gain1) -- (op1);
+\draw[->,>=latex] (start) -| (delai1);
+\draw[->,>=latex] (delai1) -- (delai2);
+\draw[-] (delai1) |- (gain2);
+\draw[->,>=latex] (gain2) -- (op2);
+\draw[-] (delai2) |- (gain3);
+\draw[->,>=latex] (gain3) -| (op2);
+\draw[->,>=latex] (op2) -| (op1);
+\draw[->,>=latex] (op1) -- (op21);
+\draw[->,>=latex] (op22) -- (op21);
+\draw[->,>=latex] (op21) -- (stop);
+\draw[->,>=latex] (op21) -| (delai21);
+\draw[->,>=latex] (delai21) -- (delai22);
+\draw[-] (delai21) |- (gain21);
+\draw[-] (delai22) |- (gain22);
+\draw[->,>=latex] (gain22) -| (op22);
+\draw[->,>=latex] (gain21) -- (op22);
+\end{tikzpicture}
