@@ -891,4 +891,109 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 ]
 (./tikz/block_diagram.tikz)
-Overfull \hbox (1.62024pt too wide) in pa
+Overfull \hbox (1.62024pt too wide) in paragraph at lines 43--168
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 43--168
+
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[2] <./fig/z_plane_0.png, id=33, 578.16pt x 433.62pt>
+File: ./fig/z_plane_0.png Graphic file (type png)
+
+<use ./fig/z_plane_0.png>
+Package pdftex.def Info: ./fig/z_plane_0.png used on input line 215.
+(pdftex.def)             Requested size: 277.20154pt x 207.89703pt.
+
+Overfull \hbox (25.20154pt too wide) in paragraph at lines 215--216
+ [][] 
+ []
+
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 220.
+(/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/t1pcr.fd
+File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
+)
+PGFPlots: reading {./csv/ri_0.txt}
+PGFPlots: reading {./csv/ri_1.txt}
+ [3 <./fig/z_plane_0.png>]
+PGFPlots: reading {./csv/rf_0.txt}
+PGFPlots: reading {./csv/rf_0.txt}
+ [4] [5]
+Underfull \hbox (badness 1577) in paragraph at lines 429--430
+[]\T1/ptm/m/it/11 Discrétisation de la ré-ponse im-pul-sion-nelle :
+ []
+
+
+Underfull \hbox (badness 2818) in paragraph at lines 438--439
+[]\T1/ptm/b/n/11 Proposition 6 \T1/ptm/m/n/11 (Pôles de pre-mier ordre)\T1/ptm/
+b/n/11 . []\T1/ptm/m/it/11 Lorsque
+ []
+
+[6]
+PGFPlots: reading {./csv/iir_comp.txt}
+PGFPlots: reading {./csv/iir_comp.txt}
+PGFPlots: reading {./csv/iir_comp.txt}
+ [7]
+PGFPlots: reading {./csv/fir_w_ri.txt}
+PGFPlots: reading {./csv/fir_w_rf.txt}
+PGFPlots: reading {./csv/fir_w_rf.txt}
+PGFPlots: reading {./csv/fir_w_rf.txt}
+ [8]
+Overfull \hbox (10.1747pt too wide) in paragraph at lines 613--613
+[] 
+ []
+
+PGFPlots: reading {./csv/iir_prony_rf.txt}
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[9] [10] [11] [12
+
+] (./filtrage.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 26626 strings out of 493117
+ 631625 string characters out of 6135433
+ 1436704 words of memory out of 5000000
+ 29610 multiletter control sequences out of 15000+600000
+ 125176 words of font info for 146 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 69i,20n,107p,869b,2131s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2014/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
+exlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/te
+xlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/tex
+live/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texli
+ve/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive
+/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2
+014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/201
+4/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2014/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2014/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2014/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2014/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2014/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2014/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2014/texmf-dist/font
+s/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2014/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2014/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2014/texmf-dist/fonts/type
+1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2014/texmf-dist/fonts/
+type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2014/texmf-dist/fo
+nts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type
+1/urw/times/utmb8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/time
+s/utmbi8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/utmr8a.
+pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on filtrage.pdf (12 pages, 549478 bytes).
+PDF statistics:
+ 143 PDF objects out of 1000 (max. 8388607)
+ 102 compressed objects within 2 object streams
+ 0 named destinations out of 1000 (max. 500000)
+ 18 words of extra memory for PDF output out of 10000 (max. 10000000)
+
