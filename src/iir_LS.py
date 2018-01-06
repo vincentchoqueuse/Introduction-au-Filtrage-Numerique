@@ -35,13 +35,12 @@ def cost_function(x0):
     H=sig.TransferFunction(num,den,dt=Te)
     t,rit=sig.dimpulse(H,n=200)
     error=np.sum(np.abs(ri-rit)**2)
-    print(error)
     return error
 
 
-rranges = (slice(-2, 2, 0.1), slice(-2, 2, 0.1),slice(-2, 2, 0.1), slice(-2, 2, 0.1),slice(-2, 2, 0.1))
+rranges = (slice(-2, 2, 0.2), slice(-2, 2, 0.2),slice(-2, 2, 0.2), slice(-2, 2, 0.2),slice(-2, 2, 0.2))
 
-resbrute = optimize.brute(cost_function, rranges, args=params, full_output=True,finish=optimize.fmin)
+resbrute = optimize.brute(cost_function, rranges, full_output=True,finish=optimize.fmin)
 print(resbrute[0])
 x0=resbrute[0]
 
