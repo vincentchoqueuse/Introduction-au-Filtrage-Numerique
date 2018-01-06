@@ -581,19 +581,7 @@ Mathématiquement, un filtre IIR est modélisé par la relation
 y[n]=\sum_{k=0}^{M} b_m x[n-m]-\sum_{l=1}^{L}a_l y[n-l]
 \end{align}
 La réponse impulsionnelle d'un filtre IIR s'obtient par récurrence en posant $x[n]=\delta[n]$.
-Dans ce contexte, la technique de synthèse optimale consiste à minimiser l'erreur quadratique $\epsilon$ par rapport aux coefficients de la partie récursive et non-récursive du filtre.
-\begin{proposition}[Technique de synthèse optimale]
-Soit $\Omega=\{\widehat{a}_1,\cdots,\widehat{a}_L,\widehat{b}_0,\cdots,\widehat{b}_M \}$ les $L+M+1$ paramètres d'un filtre IIR.  La technique de synthèse optimale consiste à fixer $\Omega$ tel que 
-\begin{align}
-\widehat{\Omega}&=\arg \min_{\Omega \in \mathbb{R}^{L+M+1}} \sum_{n=0}^{N-1}(h_d[n]-h_\Omega[n])^2
-\end{align}
-où $h_\Omega[n]$ désigne la réponse impulsionnelle du filtre parametrée par $\Omega$. Cette réponse est donnée par
-\begin{align*}
-h_\Omega[n]&=\sum_{k=0}^{M} b_m \delta[n-k]-\sum_{l=1}^{L}a_l h_\Omega[n-l]
-\end{align*}
-\end{proposition}
-
-Notons que la technique de synthèse optimale est généralement difficile à appliquer car elle nécessite de minimiser une fonction compliquée dans un espace de dimension $L+M+1$. Bien que cette minimisation puisse être réalisée en utilisant des algorithmes itératifs (fonction \texttt{minimize} en Python par exemple), la fonction de coût est généralement multimodale ce qui complexifie considérablement la recherche du maximum global.
+Dans ce contexte, la technique de synthèse optimale consiste à minimiser l'erreur quadratique $\epsilon$ par rapport aux coefficients $\Omega=\{\widehat{a}_1,\cdots,\widehat{a}_L,\widehat{b}_0,\cdots,\widehat{b}_M \}$  de la partie récursive et non-récursive du filtre. Cette technique de synthèse optimale est généralement difficile à appliquer car elle nécessite de minimiser une fonction compliquée dans un espace de dimension $L+M+1$. 
 
 Pour simplifier le problème, une technique alternative consiste à minimiser, au lieu de l'erreur $\epsilon$, l'erreur quadratique \textit{tronquée et filtrée} définie par
 \begin{align}

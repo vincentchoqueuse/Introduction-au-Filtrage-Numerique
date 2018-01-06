@@ -38,27 +38,25 @@ def cost_function(x0):
     return error
 
 
-x0=np.array([-1.85879,0.86812,0.00233,0.00466,0.00233])
-num,den=extract_num_den(x0)
-H=sig.TransferFunction(num,den,dt=Te)
-print(H)
-t,rit=sig.dimpulse(H)
-print(rit)
-plt.plot(np.ravel(rit))
-n=input("truc")
+x0=np.ones(5)
 
 
-res = minimize(cost_function, x0, method='Nelder-Mead', tol=1e-6)
+
+res = minimize(cost_function, x0)
 omega=res.x
 print(omega)
 
 num,den=extract_num_den(omega)
 H=sig.TransferFunction(num,den,dt=Te)
 
+
+
 w_vect=np.logspace(1,3.49,100)
 wb, Hj = sig.dfreqresp(H,w=w_vect*Te)
 
-plt.plot(ri)
+t,rit=sig.dimpulse(H,n=200)
+plt.figure()
+plt.plot(np.ravel(rit))
 plt.figure()
 plt.semilogx(w_vect,20*np.log10(np.abs(Hj)))
 
