@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.9.18)  6 JAN 2018 16:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.9.18)  6 JAN 2018 21:45
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -944,17 +944,16 @@ PGFPlots: reading {./csv/fir_w_rf.txt}
 PGFPlots: reading {./csv/fir_w_rf.txt}
 PGFPlots: reading {./csv/fir_w_rf.txt}
  [8]
-Overfull \hbox (10.1747pt too wide) in paragraph at lines 614--614
+Overfull \hbox (10.1747pt too wide) in paragraph at lines 625--625
 [] 
  []
 
+
+Underfull \vbox (badness 7064) has occurred while \output is active []
+
 PGFPlots: reading {./csv/iir_prony_rf.txt}
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[9] [10] [11] [12
-
-] (./filtrage.aux)
+ [9]
+[10] [11] [12] (./filtrage.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -962,7 +961,7 @@ LaTeX Warning: There were multiply-defined labels.
 Here is how much of TeX's memory you used:
  26626 strings out of 493117
  631625 string characters out of 6135433
- 1436645 words of memory out of 5000000
+ 1436703 words of memory out of 5000000
  29610 multiletter control sequences out of 15000+600000
  125176 words of font info for 146 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -986,14 +985,15 @@ type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2014/texmf-dist/fonts/ty
 pe1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2014/texmf-dist/fonts/type
 1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2014/texmf-dist/fonts/
 type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2014/texmf-dist/fo
-nts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type
-1/urw/times/utmb8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/time
-s/utmbi8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/utmr8a.
-pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on filtrage.pdf (12 pages, 549397 bytes).
+nts/type1/public/amsfonts/symbols/msbm7.pfb></usr/local/texlive/2014/texmf-dist
+/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/t
+ype1/urw/times/utmb8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/t
+imes/utmbi8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/utmr
+8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on filtrage.pdf (12 pages, 556171 bytes).
 PDF statistics:
- 143 PDF objects out of 1000 (max. 8388607)
- 102 compressed objects within 2 object streams
+ 147 PDF objects out of 1000 (max. 8388607)
+ 105 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  18 words of extra memory for PDF output out of 10000 (max. 10000000)
 

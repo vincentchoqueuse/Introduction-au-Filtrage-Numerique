@@ -77,7 +77,7 @@ Dans ce document, nous allons nous intéresser à la classe des filtres dits linéa
 \item Invariance dans le temps: Si l'entrée du filtre est égale à $x[n]=x_1[n-\tau]$ ($\tau \in \mathbb{Z}$), alors la sortie sera égale à $y[n]=y_1[n-\tau]$.
 \end{itemize}
 \end{definition}
-Un filtre LTI est entièrement décrit par sa réponse à une entrée de type impulsion c-a-d lorsque $x[n]=\delta[n]$. La réponse à une entrée de type impulsion est appelée réponse impulsionnelle et est notée $h[n]$. Lorsque l'entrée est un signal quelconque, la propriété suivante montre que la sortie du filtre s'obtient en convoluant l'entrée avec la réponse impulsionnelle du filtre.
+Un filtre LTI est entièrement décrit par sa réponse à une entrée de type impulsion ($x[n]=\delta[n]$). La réponse à une entrée de type impulsion est appelée réponse impulsionnelle et est notée $h[n]$. Lorsque l'entrée est un signal quelconque, la propriété suivante montre que la sortie du filtre s'obtient en convoluant l'entrée avec la réponse impulsionnelle du filtre.
 \begin{propriete}[Sortie du filtre] \label{prop0} Lorsqu'un signal $x[n]$ est envoyé à l'entrée d'un filtre LTI, la sortie s'exprime sous la forme
 \begin{align}
 y[n]=x[n]*h[n] \triangleq \sum_{k=-\infty}^{\infty}x[k]h[n-k]
@@ -90,11 +90,11 @@ Voir annexe \ref{dprop0}.
 
 Une grande partie des filtres LTI peut s'exprimer à partir d'une équation aux différences
 \begin{align}
-y[n]=\sum_{k=0}^{M}b_k x[n-k]-\sum_{l=1}^{L}a_l y[n-l],\label{filtre1}
+y[n]=\sum_{m=0}^{M}b_m x[n-m]-\sum_{l=1}^{L}a_l y[n-l],\label{filtre1}
 \end{align}
-où les coefficients réels $b_k$ ($k=0,\cdots,M$) et $a_k$ ($k=1,\cdots,L$) correspondent respectivement aux coefficients de la partie non récursive et récursive du filtre. Notons que le coefficient multipliant $y[n]$ est implicitement égal à $a_0=1$. L'ordre du filtre est défini comme étant la plus grande valeur entre $N$ et $L$. 
+où les coefficients réels $b_m$ ($m=0,\cdots,M$) et $a_l$ ($l=1,\cdots,L$) correspondent respectivement aux coefficients de la partie non récursive et récursive du filtre. Notons que le coefficient multipliant $y[n]$ est implicitement égal à $a_0=1$. L'ordre du filtre est défini comme étant la plus grande valeur entre $M$ et $L$. 
 
-La réponse impulsionnelle d'un filtre décrit par une équation aux différences s'obtient en posant $x[n]=\delta[0]$ dans l'équation (\ref{filtre1}). En fonction des coefficients $a_k$, il est alors possible de définir deux grandes catégories de filtres:
+La réponse impulsionnelle d'un filtre décrit par une équation aux différences s'obtient en posant $x[n]=\delta[n]$ dans l'équation (\ref{filtre1}). En fonction des coefficients $a_k$, il est alors possible de définir deux grandes catégories de filtres:
 \begin{itemize}
 \item les filtres à Réponse Impulsionnelle Finie (FIR) pour lesquels $a_l=0$ pour tout $l>0$,
 \item les filtres à Réponse Impulsionnelle Infinie (IIR) pour lesquels il existe au moins une valeur de $l$ ($l>0$) telle que $a_l\ne 0$.
@@ -105,8 +105,8 @@ La réponse impulsionnelle d'un filtre décrit par une équation aux différences s'
 Dans ce document, nous allons traiter les problématiques suivantes.
 
 \begin{itemize}
-\item Connaissant la valeur des coefficients $b_k$ et $a_l$, est-il possible de comprendre l'effet d'un filtre sur une entrée quelconque $x[n]$  ? 
-\item Est-il possible de déterminer les coefficients $b_k$ et $a_l$ d'un filtre à partir d'un ensemble de spécifications (fréquentielles ou temporelles) ?
+\item Connaissant la valeur des coefficients $b_m$ et $a_l$, est-il possible de comprendre l'effet d'un filtre sur une entrée quelconque $x[n]$  ? 
+\item Est-il possible de déterminer les coefficients $b_m$ et $a_l$ d'un filtre à partir d'un ensemble de spécifications (fréquentielles ou temporelles) ?
 \end{itemize}
 
 \section{Analyse de Filtre}
@@ -161,7 +161,7 @@ $r^n\sin (\omega_0 n)u[n]$& $\frac{r\sin(\omega_0)z^{-1}}{1-2r\cos(\omega_0)z^{-
 \end{enumerate}
 \end{propriete}
 
-La propriété liée au décalage temporel indique qu'un retard d'un échantillon dans le domaine temporel revient à multiplier la transformée en $\mathcal{Z}$ par $z^{-1}$. En utilisant cette propriété, l'équation aux différences peut être représenté graphiquement par un schéma bloc où les blocs de fonction de transfert $z^{-1}$ introduisent un retard d'un échantillon. A titre d'exemple, la figure \ref{fig_schema} présente le schéma bloc du filtre~1.
+La propriété liée au décalage temporel indique qu'un retard d'un échantillon dans le domaine temporel revient à multiplier la transformée en $\mathcal{Z}$ par $z^{-1}$. En utilisant cette propriété, l'équation aux différences peut être représentée graphiquement par un schéma bloc où les blocs de fonction de transfert $z^{-1}$ introduisent un retard d'un échantillon. A titre d'exemple, la figure \ref{fig_schema} présente le schéma bloc du filtre~1.
 
 \begin{figure}[!h]
 \input{./tikz/block_diagram.tikz}
@@ -176,10 +176,10 @@ H(z)&=\sum_{n=-\infty}^{\infty}h[n]z^{-n}
 \end{align}
 \end{definition}
 
-La propriété liée à la convolution montre que la fonction de transfert d'un filtre s'exprime également sous la forme $H(z)=Y(z)/X(z)$. Pour un filtre décrit par une équation aux différences, cette propriété permet d'exprimer la fonction de transfert du filtre en fonction des coefficients des parties récursive $a_l$ et non-recursive $b_k$ du filtre.
+La propriété liée à la convolution montre que la fonction de transfert d'un filtre s'exprime également sous la forme $H(z)=Y(z)/X(z)$. Pour un filtre décrit par une équation aux différences, cette propriété permet d'exprimer la fonction de transfert du filtre en fonction des coefficients des parties récursive $a_l$ et non-recursive $b_m$ du filtre.
 \begin{proposition}[Expression de la Fonction de transfert d'un filtre] La fonction de transfert d'un filtre numérique décrit par une équation aux différences s'exprime sous la forme ($a_0\triangleq 1$)
 \begin{align*}
-H(z)=\frac{\sum_{k=0}^{M}b_k z^{-k}}{\sum_{l=0}^{L}a_l z^{-l}}=\frac{B(z)}{A(z)}
+H(z)=\frac{\sum_{m=0}^{M}b_m z^{-k}}{\sum_{l=0}^{L}a_l z^{-l}}=\frac{B(z)}{A(z)}
 \end{align*}\label{prop_ft}
 \end{proposition}
 \begin{proof}
@@ -205,9 +205,9 @@ La figure \ref{fig_abs_z} présente le module de la fonction de transfert, $|H(z)
 
 \begin{definition}[Pôles et Zéros] Une fonction de transfert peut s'exprimer sous forme factorisée de la manière suivante
 \begin{align*}
-H(z)=\left(\frac{b_0}{a_0}\right)\frac{\prod_{k=1}^{M}(1-c_k z^{-1})}{\prod_{l=1}^{L}(1-d_l z^{-1})}
+H(z)=\left(\frac{b_0}{a_0}\right)\frac{\prod_{m=1}^{M}(1-c_m z^{-1})}{\prod_{l=1}^{L}(1-d_l z^{-1})}
 \end{align*}
-où les valeurs $c_k$ et $d_l$ correspondent respectivement aux zéros et aux pôles de la fonction de transfert.
+où les valeurs $c_m$ et $d_l$ correspondent respectivement aux zéros et aux pôles de la fonction de transfert.
 \end{definition}
 
 \begin{figure}[!t]
@@ -217,7 +217,7 @@ où les valeurs $c_k$ et $d_l$ correspondent respectivement aux zéros et aux pôle
 \label{fig_abs_z}
 \end{figure}
 
-En pratique, les pôles et les zéros s'obtiennent le plus souvent en utilisant des algorithmes numériques. A titre d'illustration, la fonction Python \texttt{root} permet d'établir que le filtre 1 possède un zéro double en $z=-1$ et deux pôles complexes conjugués en $z=0.57\pm 0.29j$. Notons que comme les coefficients $a_l$ et $b_k$ sont réels, les pôles et zéros complexes sont nécessairement conjugués. Il est courant de représenter la localisation des pôles et des zéros dans le plan complexe. Par convention, les pôles sont indiqués avec un $\times$ et les zéros avec un $\circ$. La figure \ref{fig_carte_pz} présente la localisation des pôles et des zéros pour le filtre 1.
+En pratique, les pôles et les zéros s'obtiennent le plus souvent en utilisant des algorithmes numériques. A titre d'illustration, la fonction Python \texttt{root} permet d'établir que le filtre 1 possède un zéro double en $z=-1$ et deux pôles complexes conjugués en $z=0.57\pm 0.29j$. Notons que comme les coefficients $a_l$ et $b_m$ sont réels, les pôles et zéros complexes sont nécessairement conjugués. Il est courant de représenter la localisation des pôles et des zéros dans le plan complexe. Par convention, les pôles sont indiqués avec un $\times$ et les zéros avec un $\circ$. La figure \ref{fig_carte_pz} présente la localisation des pôles et des zéros pour le filtre 1.
 
 \begin{figure*}[t]
 \begin{subfigure}[b]{0.5\textwidth}
@@ -367,11 +367,11 @@ Pour analyser le comportement d'un filtre, il est utile de représenter le module
 %\end{figure*}
 
 
-Pour les filtres décrits par une équation aux différences, la réponse fréquentielle peut s'exprimer en fonction de la transformée de Fourier des coefficients $a_l$ et $b_k$ du filtre.
+Pour les filtres décrits par une équation aux différences, la réponse fréquentielle peut s'exprimer en fonction de la transformée de Fourier des coefficients $a_l$ et $b_m$ du filtre.
 \begin{proposition}[Réponse Frequentielle]
 La réponse fréquentielle d'un filtre s'exprime sous la forme
 \begin{align*}
-H(e^{j\omega})\triangleq \frac{Y(e^{j\omega})}{X(e^{j\omega})}=\frac{\sum_{k=0}^{M}b_k e^{-j\omega k}}{\sum_{l=0}^{N}a_l e^{-j\omega l}}=\frac{B(e^{j\omega})}{A(e^{j\omega})}
+H(e^{j\omega})\triangleq \frac{Y(e^{j\omega})}{X(e^{j\omega})}=\frac{\sum_{k=0}^{M}b_m e^{-j\omega k}}{\sum_{l=0}^{N}a_l e^{-j\omega l}}=\frac{B(e^{j\omega})}{A(e^{j\omega})}
 \end{align*}
 \end{proposition}
 Le module et l'argument s'expriment alors sous la forme suivante.
@@ -387,7 +387,7 @@ Arg[H(e^{j\omega})]&=Arg[B(e^{j\omega})]-Arg[A(e^{j\omega})]
 
 En utilisant les résultats précédents, il est possible de démontrer que les filtres FIR et IIR possèdent des propriétés bien différentes.
 \begin{itemize}
-\item \textbf{Filtres FIR}. Comme $a_l=0$ pour tout $l\ne 0$, les filtres FIR n'ont pas de partie récursive. Ces filtres n'ont pas de pôle et sont donc nécessairement stables. Dans le cas où les coefficients du filtre sont symétriques, c-a-d $b_k=b_{M-k}$, il est possible de démontrer que la phase est linéaire, c-a-d $Arg[H(e^{j\omega})]=-\omega \tau$. L'inconvénient majeur des filtres FIR réside dans la pente de $|H(e^{j\omega})|$. En effet, il est nécessaire d'utiliser un ordre $M$ élevé pour obtenir un filtre avec une pente élevée.
+\item \textbf{Filtres FIR}. Comme $a_l=0$ pour tout $l\ne 0$, les filtres FIR n'ont pas de partie récursive. Ces filtres n'ont pas de pôle et sont donc nécessairement stables. Dans le cas où les coefficients du filtre sont symétriques, c-a-d $b_m=b_{M-k}$, il est possible de démontrer que la phase est linéaire, c-a-d $Arg[H(e^{j\omega})]=-\omega \tau$. L'inconvénient majeur des filtres FIR réside dans la pente de $|H(e^{j\omega})|$. En effet, il est nécessaire d'utiliser un ordre $M$ élevé pour obtenir un filtre avec une pente élevée.
 \item \textbf{Filtres IIR}. Les filtres IIR possèdent une partie récursive et donc un ou des pôles $d_l$. Un filtre IIR est stable si tous ses pôles sont inclus dans le cercle de rayon unité. La phase d'un filtre IIR ne peut pas être linéaire et est généralement difficile à contrôler. Par rapport à des filtres FIR de même ordre, les filtres IIR présentent l'avantage d'avoir des pentes nettement plus élevées. 
 \end{itemize}
 L'ensemble de ces propriétés est résumé dans le tableau~\ref{t_comp_filtres}.
@@ -399,7 +399,7 @@ L'ensemble de ces propriétés est résumé dans le tableau~\ref{t_comp_filtres}.
 Partie récursive  & Non & Oui\\
 Pôles & Non & Oui \\
 Stable & Oui & Oui si $|d_l|<1$\\
-Phase Linéaire & Oui si  $b_k=b_{M-k}$& Non\\
+Phase Linéaire & Oui si  $b_m=b_{M-k}$& Non\\
 Ordre & Elevé & Faible \\
 \hline
 \end{tabular}
@@ -504,9 +504,9 @@ La réponse fréquentielle de ce filtre est présentée sur la figure \ref{fig_comp_
 \caption{Comparaison de deux techniques de synthèse: invariance impulsionnelle et transformée bilinéaire.}\label{fig_comp_iir}
 \end{figure}
 
-\section{Synthèse par modèle de réponse impulsionnelle}
+\section{Synthèse par modèle de réponse impulsionnelle ou fréquentielle}
 \label{s_design_ri}
-Un filtre numérique est décrit par en ensemble de coefficients $b_k$ et $a_k$. Pour synthétiser un filtre, une technique possible consiste à minimiser un critère d'erreur entre la réponse attendue (impulsionnelle ou fréquentielle) et la réponse du filtre. Un critère d'erreur couramment utilisé est l'erreur quadratique. Dans cette partie, nous allons voir comment fixer les coefficients $b_k$ et $a_l$ afin de minimiser l'erreur quadratique entre la réponse impulsionnelle attendue et la réponse impulsionnelle du filtre c-a-d
+Un filtre numérique est décrit par en ensemble de coefficients $b_m$ et $a_k$. Pour synthétiser un filtre, une technique possible consiste à minimiser un critère d'erreur entre la réponse attendue (impulsionnelle ou fréquentielle) et la réponse du filtre. Un critère d'erreur couramment utilisé est l'erreur quadratique. Dans cette partie, nous allons voir comment fixer les coefficients $b_m$ et $a_l$ afin de minimiser l'erreur quadratique entre la réponse impulsionnelle attendue et la réponse impulsionnelle du filtre c-a-d
 \begin{align}
 \epsilon&=\sum_{n=-\infty}^{\infty}(h_d[n]-h[n])^2\label{eq_ref_h}
 \end{align}
@@ -514,7 +514,7 @@ Notons que la réponse impulsionnelle désirée $h_d[n]$ est parfois donnée implici
 
 Pour illustrer cette section, nous allons synthétiser le filtre suivant.
 \begin{exemple}[Filtre 3]
-Le filtre 3 est un filtre passe-bas en mur de brique (pente infinie) comportant une phase linéaire. La réponse fréquentielle de ce filtre est donnée par $H_d(e^{j\omega})=|H_d(e^{j\omega})|e^{-j\omega M/2}$ où
+Le filtre 3 est un filtre passe-bas en mur de brique (pente infinie) comportant une phase linéaire. La réponse fréquentielle de ce filtre est donnée par $H_d(e^{j\omega})=|H_d(e^{j\omega})|e^{-j\omega N/2}$ où
 \begin{align}
 |H_d(e^{j\omega})|&=\left\{\begin{array}{cl}
 1&\textrm{, pour } |\omega| \le \omega_a T_e\\
@@ -524,9 +524,9 @@ avec $\omega_a=100$ rad/s et $T_e=0.001$s.
 \end{exemple}
 La réponse impulsionnelle du filtre 3 s'obtient en utilisant l'équation (\ref{e_def_if}). Après quelques calculs, nous obtenons
 \begin{align}
-h_d[n]&=\frac{\sin\left(\omega_a T_e (n-M/2)\right)}{\pi (n-M/2)}
+h_d[n]&=\frac{\sin\left(\omega_a T_e (n-N/2)\right)}{\pi (n-N/2)}
 \end{align}
-La réponse impulsionnelle de ce filtre est présentée dans la figure \ref{fig_fir_ri} pour $M=100$ échantillons.
+La réponse impulsionnelle de ce filtre est présentée dans la figure \ref{fig_fir_ri} pour $N=200$ échantillons.
 \begin{figure}[t]
 \centering
 \begin{tikzpicture}
@@ -539,9 +539,9 @@ La réponse impulsionnelle de ce filtre est présentée dans la figure \ref{fig_fir
 
 \subsection{Filtres FIR (Technique par fenêtrage)}
 
-Mathématiquement, un filtre FIR est modélisé par la relation
+Mathématiquement, un filtre FIR d'ordre $M=N$ est modélisé par la relation
 \begin{align}
-y[n]=\sum_{k=0}^{M} b_k x[n-k]
+y[n]=\sum_{m=0}^{M} b_m x[n-m]
 \end{align}
 La réponse impulsionnelle d'un filtre FIR est donnée par
 \begin{align}
@@ -549,15 +549,15 @@ h[n]=\left\{\begin{array}{cl}b_n&\textrm{ pour }0\le n \le M\\
 0& \textrm{ ailleurs}
 \end{array}\right.
 \end{align}
-Dans ce contexte, la minimisation de l'erreur quadratique $\epsilon$ dans (\ref{eq_ref_h}) s'obtient facilement en imposant l'égalité $b_k=h_d[k]$ dans l'intervalle $0\le n \le M$. Cette technique est couramment appelée technique de synthèse par fenêtrage car la réponse impulsionnelle obtenue correspond à la réponse impulsionnelle attendue multipliée par une fenêtre rectangulaire. Notons qu'il est possible de généraliser cette technique en remplaçant la fenêtre rectangulaire par une fenêtre de pondération $w[k]$. 
+Dans ce contexte, la minimisation de l'erreur quadratique $\epsilon$ dans (\ref{eq_ref_h}) s'obtient facilement en imposant l'égalité $b_m=h_d[m]$ dans l'intervalle $0\le m \le M$. Cette technique est couramment appelée technique de synthèse par fenêtrage car la réponse impulsionnelle obtenue correspond à la réponse impulsionnelle attendue multipliée par une fenêtre rectangulaire. Notons qu'il est possible de généraliser cette technique en remplaçant la fenêtre rectangulaire par une fenêtre de pondération $w[m]$ afin de limiter l'effet de la troncature en temps.
 \begin{proposition}[Technique de synthèse par fenêtrage]
 La technique de synthèse par fenêtrage s'obtient en fixant 
 \begin{align}
-\widehat{b}_k=\left\{\begin{array}{cl}w[k]h_d[k]&\textrm{ pour }0\le n \le M\\
+\widehat{b}_m=\left\{\begin{array}{cl}w[m]h_d[m]&\textrm{ pour }0\le m \le M\\
 0& \textrm{ ailleurs}
 \end{array}\right.
 \end{align}
-où $w[k]$ est une fenêtre de pondération.
+où $w[m]$ est une fenêtre de pondération.
 \end{proposition}
 
 La figure \ref{fig_comp_fir} présente l'allure de la réponse fréquentielle obtenue pour la synthèse du Filtre 3. Cette figure compare les résultats obtenus avec trois fenêtres de pondération différentes (rectangulaire, Hamming et Blackman). Nous pouvons observer un compromis entre la raideur de la pente du filtre et l'amplitude des lobes secondaires.
@@ -578,20 +578,31 @@ La figure \ref{fig_comp_fir} présente l'allure de la réponse fréquentielle obten
 \subsection{Filtre IIR}
 Mathématiquement, un filtre IIR est modélisé par la relation
 \begin{align}
-y[n]=\sum_{k=0}^{M} b_k x[n-k]-\sum_{l=1}^{N}a_l y[n-l]
+y[n]=\sum_{k=0}^{M} b_m x[n-m]-\sum_{l=1}^{L}a_l y[n-l]
 \end{align}
-Pour $n\ge 0$, la réponse impulsionnelle d'un filtre IIR est donnée par
+La réponse impulsionnelle d'un filtre IIR s'obtient par récurrence en posant $x[n]=\delta[n]$.
+Dans ce contexte, la technique de synthèse optimale consiste à minimiser l'erreur quadratique $\epsilon$ par rapport aux coefficients de la partie récursive et non-récursive du filtre.
+\begin{proposition}[Technique de synthèse optimale]
+Soit $\Omega=\{\widehat{a}_1,\cdots,\widehat{a}_L,\widehat{b}_0,\cdots,\widehat{b}_M \}$ les $L+M+1$ paramètres d'un filtre IIR.  La technique de synthèse optimale consiste à fixer $\Omega$ tel que 
+\begin{align}
+\widehat{\Omega}&=\arg \min_{\Omega \in \mathbb{R}^{L+M+1}} \sum_{n=0}^{N-1}(h_d[n]-h_\Omega[n])^2
+\end{align}
+où $h_\Omega[n]$ désigne la réponse impulsionnelle du filtre parametrée par $\Omega$. Cette réponse est donnée par
 \begin{align*}
-h[n]&=\sum_{k=0}^{M} b_k \delta[n-k]-\sum_{l=1}^{L}a_l h[n-l]
+h_\Omega[n]&=\sum_{k=0}^{M} b_m \delta[n-k]-\sum_{l=1}^{L}a_l h_\Omega[n-l]
 \end{align*}
-La minimisation directe de l'erreur quadratique $\epsilon$ dans (\ref{eq_ref_h}) est généralement difficile. D'une part, le calcul de l'erreur nécessite de sommer une infinité de termes. D'autre part, le problème de minimisation est non-linéaire par rapport aux coefficients $a_k$. Pour résoudre ce problème, une technique alternative consiste à minimiser, au lieu de l'erreur $\epsilon$, l'erreur quadratique \textit{tronquée et filtrée} définie par
+\end{proposition}
+
+Notons que la technique de synthèse optimale est généralement difficile à appliquer car elle nécessite de minimiser une fonction compliquée dans un espace de dimension $L+M+1$. Bien que cette minimisation puisse être réalisée en utilisant des algorithmes itératifs (fonction \texttt{minimize} en Python par exemple), la fonction de coût est généralement multimodale ce qui complexifie considérablement la recherche du maximum global.
+
+Pour simplifier le problème, une technique alternative consiste à minimiser, au lieu de l'erreur $\epsilon$, l'erreur quadratique \textit{tronquée et filtrée} définie par
 \begin{align}
 \epsilon_f&=\sum_{n=0}^{N-1}(h_{df}[n]-b[n])^2\label{eq_ref_h2}
 \end{align}
-où $h_{df}[n]=\sum_{l=0}^{L}a_l h_d[n-l]$ et $a_0=1$. Lorsque $N$ est suffisamment grand, cette technique permet d'obtenir une réponse impulsionnelle proche de la réponse impulsionnelle attendue. Cette approche est couramment appelée méthode de Prony en référence à son inventeur. En utilisant cette approche, il est démontré en annexe \ref{ap_prony} que les coefficients $a_l$ et $b_k$ s'obtiennent de la manière suivante.
+où $h_{df}[n]=\sum_{l=0}^{L}a_l h_d[n-l]$ et $a_0=1$. Lorsque $N$ est suffisamment grand, cette technique permet d'obtenir une réponse impulsionnelle proche de la réponse impulsionnelle attendue. Cette approche est couramment appelée méthode de Prony en référence à son inventeur. En utilisant cette approche, il est démontré en annexe \ref{ap_prony} que les coefficients $a_l$ et $b_m$ s'obtiennent de la manière suivante.
 
 \begin{proposition}[Technique de synthèse par la méthode de Prony]\label{prop_prony}
-La technique de synthèse par la méthode Prony s'obtient en imposant les coefficients  $\widehat{\textbf{a}}=[\widehat{a}_1,\cdots,\widehat{a}_L]^T$ et $\widehat{\textbf{b}}=[\widehat{b}_0,\cdots,\widehat{b}_M]^T$ suivants
+La technique de synthèse par la méthode Prony s'obtient en imposant les coefficients $\widehat{\textbf{a}}=[\widehat{a}_1,\cdots,\widehat{a}_L]^T$ et $\widehat{\textbf{b}}=[\widehat{b}_0,\cdots,\widehat{b}_M]^T$ suivants
 \begin{align}
 \widehat{\textbf{a}}&=(\textbf{H}^T\textbf{H})^{-1}\textbf{H}^T\textbf{x}\\
 \widehat{\textbf{b}}&=\textbf{h}+\textbf{H}_0\widehat{\textbf{a}}
@@ -721,28 +732,28 @@ où $h[n]=T_n\{\delta[.]\}$ correspond à la réponse impulsionnelle du filtre.
 
 En appliquant la transformée en $\mathcal{Z}$ de part et d'autre de l'équation (\ref{filtre1}) et en appliquant la propriété de Linéarité de la transformée en $\mathcal{Z}$, nous obtenons
  \begin{align*}
- a_0Y(z)&=\sum_{k=0}^{M}b_k z^{-k} X(z) -\sum_{l=1}^{L}a_l z^{-l}Y(z).
+ a_0Y(z)&=\sum_{m=0}^{M}b_m z^{-m} X(z) -\sum_{l=1}^{L}a_l z^{-l}Y(z).
   \end{align*}
  En factorisant par $Y(z)$ et $X(z)$, nous avons
   \begin{align*}
- Y(z)\left(\sum_{l=0}^{L}a_l z^{-l}\right)&=X(z)\left(\sum_{k=0}^{M}b_k z^{-k}\right)
+ Y(z)\left(\sum_{l=0}^{L}a_l z^{-l}\right)&=X(z)\left(\sum_{m=0}^{M}b_m z^{-m}\right)
    \end{align*}
  La fonction de transfert $H(z)=Y(z)/X(z)$ s'exprime alors sous la forme
   \begin{align*}
- \frac{Y(z)}{X(z)}&=\frac{\sum_{k=0}^{M}b_k z^{-k}}{\sum_{l=0}^{L}a_l z^{-l}}.
+ \frac{Y(z)}{X(z)}&=\frac{\sum_{m=0}^{M}b_m z^{-m}}{\sum_{l=0}^{L}a_l z^{-l}}.
  \end{align*}
  
 \section{Démonstration de la proposition \ref{prop1}}
 \label{dprop1}
 En appliquant la transformée en $\mathcal{Z}$ au filtre (\ref{filtre1}) et en fixant $a_0=1$, nous obtenons 
 \begin{align*}
-&Y(z)=\sum_{k=0}^{p}b_k X(z)z^{-k}-\sum_{l=1}^{q}a_l Y(z)z^{-l}\\
-&Y(z)\left(\sum_{l=0}^{q}a_l z^{-l}\right)=X(z) \left(\sum_{k=0}^{p}b_k z^{-k}\right)
+&Y(z)=\sum_{m=0}^{M}b_m X(z)z^{-m}-\sum_{l=1}^{L}a_l Y(z)z^{-l}\\
+&Y(z)\left(\sum_{l=0}^{L}a_l z^{-l}\right)=X(z) \left(\sum_{m=0}^{M}b_m z^{-m}\right)
 \end{align*}
 La fonction de transfert est alors égal à 
 
 \begin{align*}
-H(z)\triangleq \frac{Y(z)}{X(z)}=\frac{\sum_{k=0}^{p}b_k z^{-k}}{\sum_{l=0}^{q}a_l z^{-l}}
+H(z)\triangleq \frac{Y(z)}{X(z)}=\frac{\sum_{m=0}^{M}b_m z^{-m}}{\sum_{l=0}^{L}a_l z^{-l}}
 \end{align*}
 
 \section{Démonstration de la proposition \ref{prop1}}
@@ -776,8 +787,6 @@ y[n]&= \sum_{k=-\infty}^{\infty}e^{j\omega k}h[n-k]\\
 &= e^{j\omega n}\sum_{m=-\infty}^{\infty}h[m]e^{-j\omega m}\\
 &= e^{j\omega n}H(e^{j\omega})
 \end{align}
-
-
 
 
 \section{Démonstration de la propriété \ref{prop_f}}
@@ -858,7 +867,7 @@ En utilisant l'expression de $h_{df}[n]$, l'erreur tronquée et filtrée $\epsilon
 \epsilon_f&=\sum_{n=0}^{N-1}\left(\sum_{l=0}^{L}a_l h_d[n-l]-b[n]\right)^2\\
 &=\sum_{n=0}^{N-1}\left[h_d[n]-\left(-\sum_{l=1}^{L}a_l h_d[n-l]+b[n]\right)\right]^2
 \end{align}
-Comme $b_k=0$ pour tout $k>M$, la somme peut se décomposer en deux parties:
+Comme $b_m=0$ pour tout $k>M$, la somme peut se décomposer en deux parties:
 \begin{align}
 \epsilon_f&=\sum_{n=0}^{M}\left[h_d[n]-\left(-\sum_{l=1}^{L}a_l h_d[n-l]+b[n]\right)\right]^2\nonumber\\
 &+\sum_{n=M+1}^{N-1}\left[h_d[n]-\left(-\sum_{l=1}^{L}a_l h_d[n-l]\right)\right]^2\\
