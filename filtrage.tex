@@ -388,7 +388,7 @@ Arg[H(e^{j\omega})]&=Arg[B(e^{j\omega})]-Arg[A(e^{j\omega})]
 En utilisant les résultats précédents, il est possible de démontrer que les filtres FIR et IIR possèdent des propriétés bien différentes.
 \begin{itemize}
 \item \textbf{Filtres FIR}. Comme $a_l=0$ pour tout $l\ne 0$, les filtres FIR n'ont pas de partie récursive. Ces filtres n'ont pas de pôle et sont donc nécessairement stables. Dans le cas où les coefficients du filtre sont symétriques, c-a-d $b_k=b_{M-k}$, il est possible de démontrer que la phase est linéaire, c-a-d $Arg[H(e^{j\omega})]=-\omega \tau$. L'inconvénient majeur des filtres FIR réside dans la pente de $|H(e^{j\omega})|$. En effet, il est nécessaire d'utiliser un ordre $M$ élevé pour obtenir un filtre avec une pente élevée.
-\item \textbf{Filtres IIR}. Les filtres IIR possèdent une partie récursive et donc des pôles $d_l$. Un filtre IIR est stable si tous ses pôles sont inclus dans le cercle de rayon unité. La phase d'un filtre IIR ne peut pas être linéaire et est généralement difficile à contrôler. Par rapport à des filtres FIR de même ordre, les filtres IIR présentent l'avantage d'avoir des pentes nettement plus élevées. 
+\item \textbf{Filtres IIR}. Les filtres IIR possèdent une partie récursive et donc un ou des pôles $d_l$. Un filtre IIR est stable si tous ses pôles sont inclus dans le cercle de rayon unité. La phase d'un filtre IIR ne peut pas être linéaire et est généralement difficile à contrôler. Par rapport à des filtres FIR de même ordre, les filtres IIR présentent l'avantage d'avoir des pentes nettement plus élevées. 
 \end{itemize}
 L'ensemble de ces propriétés est résumé dans le tableau~\ref{t_comp_filtres}.
 \begin{table}
@@ -826,14 +826,14 @@ h[n]&=T_e h_a(t T_e)\\
 &=\sum_{k=1}^{N}T_e A_k e^{s_k n T_e}u[n]\\
 &=\sum_{k=1}^{N}T_e A_k (e^{s_k T_e})^{n}u[n]
 \end{align}
-En utilisant le tableau \ref{app_tabZ}, nous obtenons finalement la fonction de transfert en $\mathcal{Z}$ suivante:
+En utilisant le tableau \ref{app_tabZ}, nous obtenons finalement la fonction de transfert en $\mathcal{Z}$ suivante
 \begin{align}
 H(z)&=\sum_{k=1}^{N} \frac{T_e A_k}{1-e^{s_kT_e}z^{-1}}.
 \end{align}
 
 \section{Transformée Bilinéaire}
 \label{ap_tf}
-La transformée bilinéaire s'obtient en réalisation a substitution
+La transformée bilinéaire s'obtient en réalisant la substitution
 \begin{align}
 s&=c\frac{1-z^{-1}}{1+z^{-1}}
 \end{align}
@@ -841,14 +841,14 @@ Le passage du plan de Laplace vers le domaine en $\mathcal{Z}$ s'obtient alors v
 \begin{align}
 z^{-1}&=\frac{1-s/c}{1+s/c}\label{ap_eq_bil_0}
 \end{align}
-Dans le domaine de Laplace, le domaine fréquentiel s'obtient en posant $s=j\omega_a$. En posant $s=j\omega_a$ dans l'équation (\ref{ap_eq_bil_0}), nous obtenons $|z|=1$. L'axe des imaginaires purs dans le domaine de Laplace est donc mappé en un cercle de rayon unité dans le domaine en $\mathcal{Z}$. De plus, il en vient que 
+Dans le domaine de Laplace, le domaine fréquentiel s'obtient en posant $s=j\omega_a$. En posant $s=j\omega_a$ dans l'équation (\ref{ap_eq_bil_0}), nous obtenons $|z|=1$. L'axe des imaginaires purs dans le domaine de Laplace est donc transformé en un cercle de rayon unité dans le domaine en $\mathcal{Z}$. De plus, il en vient que 
 \begin{align}
 j\omega_a&=c\frac{1-e^{-j\omega T_e}}{1+z^{-j\omega T_e}}\\
 &=c\frac{e^{j\omega T_e/2}-e^{-j\omega T_e/2}}{e^{j\omega T_e/2}+e^{-j\omega T_e/2}}\\
 &=jc\frac{\sin(\omega T_e/2)}{\cos(\omega T_e/2)}\\
 &=jc\tan(\omega T_e/2)
 \end{align}
-La pulsation $\omega_a$ dans le domaine continue est donc mappé à la pulsation $c\tan(\omega T_e/2)$ dans le domaine numérique. De même la pulsation numérique $\omega$ correspond à la pulsation $\frac{2}{T_e}\textrm{atan}(\omega_a /c)$ dans le domaine analogique.
+La pulsation $\omega_a$ dans le domaine continue est donc déplacé à la pulsation $c\tan(\omega T_e/2)$ dans le domaine numérique. De même, la pulsation numérique $\omega$ correspond à la pulsation $\frac{2}{T_e}\textrm{atan}(\omega_a /c)$ dans le domaine analogique.
 
 \section{Technique de Prony}
 \label{ap_prony}
