@@ -3,6 +3,7 @@ import numpy as np
 import scipy.signal as sig
 import numpy.linalg as lg
 import matplotlib.pyplot as plt
+from scipy import optimize
 
 
 from scipy.optimize import minimize
@@ -38,7 +39,11 @@ def cost_function(x0):
     return error
 
 
-x0=np.ones(5)
+rranges = (slice(-2, 2, 0.1), slice(-2, 2, 0.1),slice(-2, 2, 0.1), slice(-2, 2, 0.1),slice(-2, 2, 0.1))
+
+resbrute = optimize.brute(cost_function, rranges, args=params, full_output=True,finish=optimize.fmin)
+print(resbrute[0])
+x0=resbrute[0]
 
 
 

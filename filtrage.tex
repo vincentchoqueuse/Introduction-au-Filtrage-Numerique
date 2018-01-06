@@ -580,8 +580,11 @@ Mathématiquement, un filtre IIR est modélisé par la relation
 \begin{align}
 y[n]=\sum_{k=0}^{M} b_m x[n-m]-\sum_{l=1}^{L}a_l y[n-l]
 \end{align}
-La réponse impulsionnelle d'un filtre IIR s'obtient par récurrence en posant $x[n]=\delta[n]$.
-Dans ce contexte, la technique de synthèse optimale consiste à minimiser l'erreur quadratique $\epsilon$ par rapport aux coefficients $\Omega=\{\widehat{a}_1,\cdots,\widehat{a}_L,\widehat{b}_0,\cdots,\widehat{b}_M \}$  de la partie récursive et non-récursive du filtre. Cette technique de synthèse optimale est généralement difficile à appliquer car elle nécessite de minimiser une fonction compliquée dans un espace de dimension $L+M+1$. 
+La réponse impulsionnelle d'un filtre IIR s'obtient par récurrence via l'expression
+\begin{align}
+h[n]=\sum_{k=0}^{M} b_m \delta[n-m]-\sum_{l=1}^{L}a_l h[n-l]
+\end{align}
+La technique de synthèse optimale consiste à minimiser l'erreur quadratique $\epsilon$ par rapport aux coefficients de la partie récursive et non-récursive du filtre. Cette technique de synthèse optimale est généralement difficile à appliquer car elle nécessite de minimiser une fonction compliquée dans un espace de dimension $L+M+1$. 
 
 Pour simplifier le problème, une technique alternative consiste à minimiser, au lieu de l'erreur $\epsilon$, l'erreur quadratique \textit{tronquée et filtrée} définie par
 \begin{align}
