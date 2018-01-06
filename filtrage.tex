@@ -37,7 +37,7 @@
 
 
 \begin{abstract}
-Ce document est un cours d'introduction au filtrage numérique destiné à un public de Master ayant des bases en traitement du signal. Globalement, ce document a deux objectifs. Dans un premier temps, il présente les outils mathématiques utilisés pour analyser le comportement des filtres numériques tels que la transformée en $\mathcal{Z}$ et la transformée de Fourier. Puis dans un second temps, il décrit plusieurs techniques permettant de synthétiser un filtre numérique à partir d'un ensemble de spécifications. Le lecteur souhaitant aller plus loin dans cette thématique pourra se réorienter vers la bible du filtrage numérique écrite par A. Oppenheim et R. Schafer \cite{opp} ou bien vers l'ouvrage de J. Smith \cite{smi}.
+Ce document est un cours d'introduction au filtrage numérique destiné à un public de Master ayant des bases en traitement du signal. Globalement, ce document a deux objectifs. Dans un premier temps, il présente les outils mathématiques utilisés pour analyser le comportement des filtres numériques tels que la transformée en $\mathcal{Z}$ et la transformée de Fourier. Puis dans un second temps, il décrit plusieurs techniques permettant de synthétiser un filtre numérique à partir d'un ensemble de spécifications. Le lecteur souhaitant aller plus loin dans ces deux thématiques pourra se réorienter vers la bible du filtrage numérique écrite par A. Oppenheim et R. Schafer \cite{opp} ou bien vers l'ouvrage de J. Smith \cite{smi}.
 \end{abstract}
 
 \begin{keywords}
@@ -228,7 +228,7 @@ En pratique, les pôles et les zéros s'obtiennent le plus souvent en utilisant de
 \addplot [color=black,mark=o,mark options={scale=2}] coordinates {(-1,0)};
 \addplot [dashed,domain=0:2*pi,samples=50]({cos(deg(x))},{sin(deg(x))});
 \end{axis}\end{tikzpicture}
-\caption{Filtre1: Cartographie des Pôles et des Zéros}
+\caption{Filtre 1a: Cartographie des Pôles et des Zéros}
 \label{fig_carte_pz}
 \end{subfigure}%
 \begin{subfigure}[b]{0.5\textwidth}
@@ -237,7 +237,7 @@ En pratique, les pôles et les zéros s'obtiennent le plus souvent en utilisant de
 \addplot+[ycomb,color=black,mark options={fill=black}] table[x expr=\coordindex,y index=0] {./csv/ri_0.txt};
 \end{axis}
 \end{tikzpicture}
-\caption{Filtre1: Réponse Impulsionnelle}
+\caption{Filtre 1a: Réponse Impulsionnelle}
 \end{subfigure}
 \vskip 1em
 \begin{subfigure}[b]{0.5\textwidth}
@@ -250,7 +250,7 @@ En pratique, les pôles et les zéros s'obtiennent le plus souvent en utilisant de
 \addplot [color=black,mark=o,mark options={scale=2}] coordinates {(-1,0)};
 \addplot [dashed,domain=0:2*pi,samples=50]({cos(deg(x))},{sin(deg(x))});
 \end{axis}\end{tikzpicture}
-\caption{Filtre2: Cartographie des Pôles et des Zéros}
+\caption{Filtre 1b: Cartographie des Pôles et des Zéros}
 \end{subfigure}%
 \begin{subfigure}[b]{0.5\textwidth}
 \centering
@@ -258,7 +258,7 @@ En pratique, les pôles et les zéros s'obtiennent le plus souvent en utilisant de
 \addplot+[ycomb,color=black,mark options={fill=black}] table[x expr=\coordindex,y index=0] {./csv/ri_1.txt};
 \end{axis}
 \end{tikzpicture}
-\caption{Filtre2: Réponse Impulsionnelle}
+\caption{Filtre 1b: Réponse Impulsionnelle}
 \end{subfigure}
 \caption{Lien entre la localisation des pôles et zéros et la réponse impulsionnelle.\label{fig_pz_imp}}
 \end{figure*}
@@ -276,13 +276,13 @@ Voir annexe \ref{dprop1}.
 La figure \ref{fig_pz_imp} présente la localisation des pôles et des zéros ainsi que la réponse impulsionnelle de deux filtres IIR. Le premier filtre est stable car tous ses pôles sont inclus dans le cercle de rayon unité. A l'inverse, le second filtre est instable car il possède un pôle en $z=-1.4$ dont le module est supérieur à 1. Pour ce second filtre, nous constatons que la réponse impulsionnelle semble tendre vers des valeurs infinies.
 
 \subsection{Analyse Fréquentielle}
-Le domaine fréquentielle est très utilisé pour analyser le comportement des filtres LTI. Le succès de ce domaine d'analyse est principalement lié au fait que la réponse d'un filtre à une exponentielle complexe de pulsation $\omega$ est une exponentielle complexe de même pulsation, multipliée par un coefficient complexe. Ce coefficient multiplicateur s'obtient à partir de la transformée de Fourier (à temps discret) de la réponse impulsionnelle.
+Le domaine fréquentielle est très utilisé pour analyser le comportement des filtres LTI. Le succès de ce domaine d'analyse est principalement lié au fait que la réponse d'un filtre à une exponentielle complexe de pulsation $\omega$ est une exponentielle complexe de même pulsation, multipliée par un coefficient complexe. Ce coefficient multiplicateur s'obtient à partir de la transformée de Fourier de la réponse impulsionnelle.
 
 \begin{definition}[Transformée de Fourier]
 \label{prop_f}
 Une suite numérique $x[n]$ peut se décomposer sous la forme 
 \begin{align}
-x[n]&= \frac{1}{2\pi}\int_{-\pi}^{\pi} X(e^{j\omega})e^{j\omega n}d\omega 
+x[n]&= \frac{1}{2\pi}\int_{-\pi}^{\pi} X(e^{j\omega})e^{j\omega n}d\omega \label{e_def_if}
 \end{align}
 où la quantité $X(e^{j\omega})$ correspond à la transformée de Fourier (à temps discret) de $x[n]$. Cette quantité est définie par
 \begin{align}
@@ -326,7 +326,7 @@ Comme $X(e^{j\omega})=X(e^{j(\omega+2k\pi)})$ ($k \in \mathbb{Z}$), la transform
 \label{fig_z2f}
 \end{figure*}
 
-Pour un filtre LTI, $Y(e^{j\omega})=H(e^{j\omega})X(e^{j\omega})$ c-a-d que la transformée de Fourier de la sortie s'obtient en multipliant la transformée de Fourier de la réponse impulsionnelle par la transformée de Fourier de l'entrée. La transformée de Fourier de la réponse impulsionnelle est appelée réponse fréquentielle du filtre.
+Pour un filtre LTI, la transformée de Fourier de la sortie s'obtient en multipliant la transformée de Fourier de la réponse impulsionnelle par la transformée de Fourier de l'entrée c-a-d $Y(e^{j\omega})=H(e^{j\omega})X(e^{j\omega})$. La transformée de Fourier de la réponse impulsionnelle est appelée réponse fréquentielle du filtre.
 
 \begin{definition}[Réponse fréquentielle]
 La réponse fréquentielle d'un filtre correspond à la transformée de Fourier de sa réponse impulsionnelle c-a-d
@@ -343,7 +343,7 @@ H(e^{j\omega})=|H(e^{j\omega})| e^{j Arg[H(e^{j\omega})]},
 où $|H(e^{j\omega})|$ et $Arg[H(e^{j\omega})]$ désignent respectivement le module et l'argument. 
 \end{proposition}
 
-Pour analyser le comportement d'un filtre, il est utile de représenter le module et l'argument de la réponse fréquentielle en fonction de $\omega$. L'affichage du module et de l'argument permet d'avoir une interpretation concrète de l'effet du filtre sur une entrée quelconque. En effet à la pulsation $\omega$, le filtre va appliquer un gain $|H(e^{j\omega})|$ et un déphasage (retard) $Arg[H(e^{j\omega})]$. A titre d'illustration, la figure \ref{fig_z2f} présente le module et l'argument de la réponse fréquentielle du filtre 1. Nous observons que le filtre se comporte comme un filtre passe-bas. Notons que lorsque l'argument est égal à $Arg[H(e^{j\omega})]=-\omega \tau$, ce qui n'est pas le cas ici, le filtre est dit à phase linéaire. En pratique, cette propriété est souvent recherchée car elle évite l'introduction de distorsion de phase.
+Pour analyser le comportement d'un filtre, il est utile de représenter le module et l'argument de la réponse fréquentielle en fonction de $\omega$. L'affichage du module et de l'argument permet d'avoir une interpretation concrète de l'effet du filtre sur une entrée quelconque. En effet à la pulsation $\omega$, le filtre va appliquer un gain $|H(e^{j\omega})|$ et un déphasage (retard) $Arg[H(e^{j\omega})]$. A titre d'illustration, la figure \ref{fig_z2f} présente le module et l'argument de la réponse fréquentielle du filtre 1. Nous observons que le filtre se comporte comme un filtre passe-bas. Notons que lorsque l'argument est égal à $Arg[H(e^{j\omega})]=-\omega \tau$, ce qui n'est pas le cas ici, le filtre est dit à phase linéaire. En pratique, cette propriété est souvent recherchée car elle évite la présence de distorsion de phase.
 %A titre d'illustration, la figure \ref{fig_r_sine} présente la réponse temporel du filtre lorsque qu'une sinusoïde de pulsation $\omega_0=0.7$ rad/ech est appliqué en entrée. A cette pulsation, la réponse fréquentielle du filtre indique que le filtre applique un gain $\approx$ 0.6 et un déphasage de $-1.7$ radian ($\approx 2.3$ échantillons). Ces valeurs se vérifient également à partir de la réponse temporel du filtre.
 %
 %\begin{figure*}
@@ -510,7 +510,7 @@ Un filtre numérique est décrit par en ensemble de coefficients $b_k$ et $a_k$. P
 \begin{align}
 \epsilon&=\sum_{n=-\infty}^{\infty}(h_d[n]-h[n])^2\label{eq_ref_h}
 \end{align}
-Notons que la réponse impulsionnelle désirée $h_d[n]$ est parfois donnée implicitement via la réponse fréquentielle, $H_d(e^{j\omega})$. Dans le cas, il est nécessaire de calculer $h_d[n]$ via l'expresssion (\ref{f_to_h}).
+Notons que la réponse impulsionnelle désirée $h_d[n]$ est parfois donnée implicitement via la réponse fréquentielle, $H_d(e^{j\omega})$. Dans le cas, il est nécessaire de calculer $h_d[n]$ via l'expresssion (\ref{e_def_if}).
 
 Pour illustrer cette section, nous allons synthétiser le filtre suivant.
 \begin{exemple}[Filtre 3]
@@ -522,7 +522,7 @@ Le filtre 3 est un filtre passe-bas en mur de brique (pente infinie) comportant 
 \end{align}
 avec $\omega_a=100$ rad/s et $T_e=0.001$s.
 \end{exemple}
-La réponse impulsionnelle du filtre 3 s'obtient en utilisant l'équation (\ref{f_to_h}). Après quelques calculs, nous obtenons
+La réponse impulsionnelle du filtre 3 s'obtient en utilisant l'équation (\ref{e_def_if}). Après quelques calculs, nous obtenons
 \begin{align}
 h_d[n]&=\frac{\sin\left(\omega_a T_e (n-M/2)\right)}{\pi (n-M/2)}
 \end{align}
