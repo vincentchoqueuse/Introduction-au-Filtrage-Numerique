@@ -9,7 +9,7 @@
 \usepackage{subcaption}
 \usepackage{tikz,pgfplots,pgf}
 \usetikzlibrary{shapes.geometric}
-
+\usepackage{subcaption}
 \newtheorem{propriete}{Propriété}
 \newtheorem{proposition}{Proposition}
 \newtheorem{remarque}{Remarque}
@@ -179,7 +179,7 @@ H(z)&=\sum_{n=-\infty}^{\infty}h[n]z^{-n}
 La propriété liée à la convolution montre que la fonction de transfert d'un filtre s'exprime également sous la forme $H(z)=Y(z)/X(z)$. Pour un filtre décrit par une équation aux différences, cette propriété permet d'exprimer la fonction de transfert du filtre en fonction des coefficients des parties récursive $a_l$ et non-recursive $b_m$ du filtre.
 \begin{proposition}[Expression de la Fonction de transfert d'un filtre] La fonction de transfert d'un filtre numérique décrit par une équation aux différences s'exprime sous la forme ($a_0\triangleq 1$)
 \begin{align*}
-H(z)=\frac{\sum_{m=0}^{M}b_m z^{-k}}{\sum_{l=0}^{L}a_l z^{-l}}=\frac{B(z)}{A(z)}
+H(z)=\frac{\sum_{m=0}^{M}b_m z^{-m}}{\sum_{l=0}^{L}a_l z^{-l}}=\frac{B(z)}{A(z)}
 \end{align*}\label{prop_ft}
 \end{proposition}
 \begin{proof}
@@ -343,7 +343,7 @@ H(e^{j\omega})=|H(e^{j\omega})| e^{j Arg[H(e^{j\omega})]},
 où $|H(e^{j\omega})|$ et $Arg[H(e^{j\omega})]$ désignent respectivement le module et l'argument. 
 \end{proposition}
 
-Pour analyser le comportement d'un filtre, il est utile de représenter le module et l'argument de la réponse fréquentielle en fonction de $\omega$. L'affichage du module et de l'argument permet d'avoir une interpretation concrète de l'effet du filtre sur une entrée quelconque. En effet à la pulsation $\omega$, le filtre va appliquer un gain $|H(e^{j\omega})|$ et un déphasage (retard) $Arg[H(e^{j\omega})]$. A titre d'illustration, la figure \ref{fig_z2f} présente le module et l'argument de la réponse fréquentielle du filtre 1. Nous observons que le filtre se comporte comme un filtre passe-bas. Notons que lorsque l'argument est égal à $Arg[H(e^{j\omega})]=-\omega \tau$, ce qui n'est pas le cas ici, le filtre est dit à phase linéaire. En pratique, cette propriété est souvent recherchée car elle évite la présence de distorsion de phase.
+Pour analyser le comportement d'un filtre, il est utile de représenter le module et l'argument de la réponse fréquentielle en fonction de $\omega$. L'affichage du module et de l'argument permet d'avoir une interprétation concrète de l'effet du filtre sur une entrée quelconque. En effet à la pulsation $\omega$, le filtre va appliquer un gain $|H(e^{j\omega})|$ et un déphasage (retard) $Arg[H(e^{j\omega})]$. A titre d'illustration, la figure \ref{fig_z2f} présente le module et l'argument de la réponse fréquentielle du filtre 1. Nous observons que le filtre se comporte comme un filtre passe-bas. Notons que lorsque l'argument est égal à $Arg[H(e^{j\omega})]=-\omega \tau$, ce qui n'est pas le cas ici, le filtre est dit à phase linéaire. En pratique, cette propriété est souvent recherchée car elle évite la présence de distorsion de phase.
 %A titre d'illustration, la figure \ref{fig_r_sine} présente la réponse temporel du filtre lorsque qu'une sinusoïde de pulsation $\omega_0=0.7$ rad/ech est appliqué en entrée. A cette pulsation, la réponse fréquentielle du filtre indique que le filtre applique un gain $\approx$ 0.6 et un déphasage de $-1.7$ radian ($\approx 2.3$ échantillons). Ces valeurs se vérifient également à partir de la réponse temporel du filtre.
 %
 %\begin{figure*}
@@ -456,7 +456,7 @@ H(z)&=\frac{0.00931z^{-1}}{1-1.8588z^{-1}+0.8681z^{-2}}
 La réponse fréquentielle de ce filtre est présentée sur la figure \ref{fig_comp_iir}. Notons que l'inconvenient majeur de cette technique de synthèse réside dans l'apparition d'un phénomène de repliement du spectre.
 
 \subsection{Transformée Bilinéaire}
-Dans le domaine analogique, un filtre est décrit par une équation différentielle. Pour numériser un filtre analogique, une approche possible consiste à utiliser une technique d'intégration numérique pour résoudre cette équation différentielle. En utilisant la méthode des trapèzes, nous obtenons une technique de synthèse nommée transformée bilinéaire. En pratique, la transformée bilinéaire s'obtient simplement en réalisant la substitution $s=c\frac{1-z^{-1}}{1+z^{-1}}$, où $c$ correspond à un paramètre libre du filtre. 
+Dans le domaine analogique, un filtre est décrit par une équation différentielle. Pour numériser un filtre analogique, une approche possible consiste à utiliser une technique d'intégration numérique basée sur la méthode des trapèzes. Cette approche est nommée transformée bilinéaire. En pratique, la transformée bilinéaire s'obtient simplement en réalisant la substitution $s=c\frac{1-z^{-1}}{1+z^{-1}}$, où $c$ correspond à un paramètre libre du filtre. 
 
 \begin{proposition}[Transformée Bilinéaire] En utilisant la transformée Bilinéaire, la fonction de transfert en $\mathcal{Z}$ d'un filtre numérique s'obtient à partir de la fonction de transfert analogique $H_a(z)$ sous la forme
 \begin{align}
@@ -584,7 +584,7 @@ La réponse impulsionnelle d'un filtre IIR s'obtient par récurrence via l'express
 \begin{align}
 h[n]=\sum_{k=0}^{M} b_m \delta[n-m]-\sum_{l=1}^{L}a_l h[n-l]
 \end{align}
-La technique de synthèse optimale consiste à minimiser l'erreur quadratique $\epsilon$ par rapport aux coefficients de la partie récursive et non-récursive du filtre. Cette technique de synthèse optimale est généralement difficile à appliquer car elle nécessite de minimiser une fonction compliquée dans un espace de dimension $L+M+1$. 
+La technique de synthèse optimale consiste à minimiser l'erreur quadratique $\epsilon$ par rapport aux coefficients de la partie récursive et non-récursive du filtre. Cette technique de synthèse est toutefois difficile à mettre en oeuvre car elle nécessite de minimiser une fonction multimodale dans un espace de dimension $L+M+1$. 
 
 Pour simplifier le problème, une technique alternative consiste à minimiser, au lieu de l'erreur $\epsilon$, l'erreur quadratique \textit{tronquée et filtrée} définie par
 \begin{align}
