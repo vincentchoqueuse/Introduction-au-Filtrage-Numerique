@@ -117,7 +117,7 @@ Dans cette section, nous allons introduire les outils nécessaires pour l'analyse
 Pour illustrer le contenu de cette section, nous allons analyser le filtre d'ordre 2 suivant.
 \begin{exemple}[Filtre 1] Le filtre 1 est décrit par l'équation aux différences 
 \begin{align*}
-y[n]&=0.065x[n]+0.135 x[n-1]+0.065x[n-2])\\
+y[n]&=0.065x[n]+0.13 x[n-1]+0.065x[n-2])\\
 &+1.143y[n-1]-0.413y[n-2].
 \end{align*}
 \end{exemple}
@@ -188,7 +188,7 @@ Voir annexe \ref{dprop_ft}.
 
 A titre d'exemple, il est possible de montrer que la fonction de transfert du filtre 1 est donnée par 
 \begin{align}
-H(z)=\frac{0.065+0.135 z^{-1}+0.065z^{-2}}{1-1.143z^{-1}+0.413z^{-2}}.
+H(z)=\frac{0.065+0.13 z^{-1}+0.065z^{-2}}{1-1.143z^{-1}+0.413z^{-2}}.
 \end{align}
 %Dans le domaine en $\mathcal{Z}$, la sortie est égale à la fonction de transfert multipliée par l'entrée c-a-d $Y(z)=H(z)X(z)$. Par exemple, si l'entrée du filtre 1 est un échelon unitaire, la transformée en $\mathcal{Z}$ de la sortie sera égale à $Y(z)=H(z)/(1-z^{-1})$. En utilisant le théorème de la valeur finale, nous pouvons alors anticiper qu'en temporel la valeur finale sera égale à $\lim_{n\to\infty}y[n]=H(1)=1$. La figure \ref{fig_r_step} présente la réponse du filtre 1 lorsqu'un échelon unitaire est envoyé en entrée. Nous pouvons constater qu'effectivement la valeur finale est bien égale à~$1$.
 %
@@ -865,9 +865,9 @@ Comme $b_m=0$ pour tout $k>M$, la somme peut se décomposer en deux parties:
 \end{align}
 En utilisant les notations matricielles de la propriété \ref{prop_prony}, nous obtenons
 \begin{align}
-\epsilon_f&=\left(\textbf{h}+\textbf{H}_0\textbf{a}-\textbf{b}\right)^2+\left(\textbf{x}-\textbf{H}\textbf{a}\right)^2
+\epsilon_f&=\left\|\textbf{h}+\textbf{H}_0\textbf{a}-\textbf{b}\right \|^2+\left\| \textbf{x}-\textbf{H}\textbf{a}\right \|^2
 \end{align}
-La première partie est minimisée quelque soit $\textbf{a}$ pour $\widehat{\textbf{b}}=\textbf{h}+\textbf{H}_0\textbf{a}$. En remplacant cette valeur dans l'expression de l'erreur, nous obtenons l'erreur quadratique $\epsilon_f=\left(\textbf{x}-\textbf{H}\textbf{a}\right)^2$. Cette erreur est ensuite minimisée en fixant $\widehat{\textbf{a}}=\left(\textbf{H}^T\textbf{H}\right)^{-1}\textbf{H}\textbf{x}$.
+La première partie est minimisée quelque soit $\textbf{a}$ pour $\widehat{\textbf{b}}=\textbf{h}+\textbf{H}_0\textbf{a}$. En remplacant cette valeur dans l'expression de l'erreur, nous obtenons l'erreur quadratique $\epsilon_f=\left\|\textbf{x}-\textbf{H}\textbf{a}\right\|^2$. Cette erreur est ensuite minimisée en fixant $\widehat{\textbf{a}}=\left(\textbf{H}^T\textbf{H}\right)^{-1}\textbf{H}\textbf{x}$.
 
 
 \begin{thebibliography}{9}
