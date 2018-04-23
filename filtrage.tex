@@ -10,22 +10,22 @@
 \usepackage{tikz,pgfplots,pgf}
 \usetikzlibrary{shapes.geometric}
 \usepackage{subcaption}
-\newtheorem{propriete}{Propriété}
+\newtheorem{propriete}{PropriÃ©tÃ©}
 \newtheorem{proposition}{Proposition}
 \newtheorem{remarque}{Remarque}
 \newtheorem*{exemple}{Exemple}
 \newtheorem{definition}{Definition}
 
-\author{Vincent Choqueuse\thanks{Ce cours est protégé par une licence CC BY-NC-SA. Contact: vincent.choqueuse@gmail.com}}
+\author{charles\thanks{Ce cours est protÃ©gÃ© par une licence CC BY-NC-SA. Contact: vincent.choqueuse@gmail.com}}
 \definecolor{vert}{rgb}{0.2,0.6,0.4} 
 \definecolor{rouge}{rgb}{0.9,0.,0.} 
 
 \makeindex
 
-\title{Introduction au Filtrage Numérique}
+\title{Introduction au Filtrage NumÃ©rique}
 \date{\today}
 \begin{document}
-\markboth{Introduction au Filtrage Numérique (\today)}{}
+\markboth{Introduction au Filtrage NumÃ©rique (\today)}{}
 \maketitle
 
 \tikzstyle{start} = [minimum height=1cm]
@@ -37,22 +37,22 @@
 
 
 \begin{abstract}
-Ce document est un cours d'introduction au filtrage numérique destiné à un public de Master ayant des bases en traitement du signal. Globalement, ce document a deux objectifs. Dans un premier temps, il présente les outils mathématiques utilisés pour analyser le comportement des filtres numériques tels que la transformée en $\mathcal{Z}$ et la transformée de Fourier. Puis dans un second temps, il décrit plusieurs techniques permettant de synthétiser un filtre numérique à partir d'un ensemble de spécifications. Le lecteur souhaitant aller plus loin dans ces deux thématiques pourra se réorienter vers la bible du filtrage numérique écrite par A. Oppenheim et R. Schafer \cite{opp} ou bien vers l'ouvrage de J. Smith \cite{smi}.
+Ce document est un cours d'introduction au filtrage numÃ©rique destinÃ© Ã  un public de Master ayant des bases en traitement du signal. Globalement, ce document a deux objectifs. Dans un premier temps, il prÃ©sente les outils mathÃ©matiques utilisÃ©s pour analyser le comportement des filtres numÃ©riques tels que la transformÃ©e en $\mathcal{Z}$ et la transformÃ©e de Fourier. Puis dans un second temps, il dÃ©crit plusieurs techniques permettant de synthÃ©tiser un filtre numÃ©rique Ã  partir d'un ensemble de spÃ©cifications. Le lecteur souhaitant aller plus loin dans ces deux thÃ©matiques pourra se rÃ©orienter vers la bible du filtrage numÃ©rique Ã©crite par A. Oppenheim et R. Schafer \cite{opp} ou bien vers l'ouvrage de J. Smith \cite{smi}.
 \end{abstract}
 
 \begin{keywords}
-Filtres numériques (FIR et IIR), Transformée en $\mathcal{Z}$, Transformée de Fourier, Invariance Impulsionnelle, Transformée Bilinéaire, Synthèse par fenêtrage, Méthode de Prony.
+Filtres numÃ©riques (FIR et IIR), TransformÃ©e en $\mathcal{Z}$, TransformÃ©e de Fourier, Invariance Impulsionnelle, TransformÃ©e BilinÃ©aire, SynthÃ¨se par fenÃªtrage, MÃ©thode de Prony.
 \end{keywords}
 
 \section{Introduction}
 
 
 
-Un filtre permet de "sculpter" un signal en supprimant ou en accentuant certaines composantes fréquentielles. Alors que les filtres analogiques reposent sur la conception de circuits électroniques, les filtres numériques eux sont souvent plus simples à mettre en oeuvre car ils reposent sur des algorithmes pouvant être codés dans n'importe quel langage de programmation (même si le C reste la norme pour les applications embarquées). Dans ce document, nous allons nous intéresser à la synthèse de filtres numériques à une entrée et une sortie. Ces filtres sont couramment utilisés dans un large panel d'applications. 
+Un filtre permet de "sculpter" un signal en supprimant ou en accentuant certaines composantes frÃ©quentielles. Alors que les filtres analogiques reposent sur la conception de circuits Ã©lectroniques, les filtres numÃ©riques eux sont souvent plus simples Ã  mettre en oeuvre car ils reposent sur des algorithmes pouvant Ãªtre codÃ©s dans n'importe quel langage de programmation (mÃªme si le C reste la norme pour les applications embarquÃ©es). Dans ce document, nous allons nous intÃ©resser Ã  la synthÃ¨se de filtres numÃ©riques Ã  une entrÃ©e et une sortie. Ces filtres sont couramment utilisÃ©s dans un large panel d'applications. 
 
-\subsection{Modélisation}
+\subsection{ModÃ©lisation}
 
-Un filtre numérique peut être modélisé par une fonction mathématique prenant en entrée un signal numérique et renvoyant en sortie un signal numérique (voir figure \ref{deffiltre}). Mathématiquement, un signal numérique est représenté par une suite de nombres où le $n^{ieme}$ nombre de la suite est noté $x[n]$ ($n \in \mathbb{Z}$). L'annexe \ref{app_sig} présente l'allure de plusieurs signaux numériques en fonction de $n$ (impulsion, echelon, exponentielle réelle, signal sinusoidal).
+Un filtre numÃ©rique peut Ãªtre modÃ©lisÃ© par une fonction mathÃ©matique prenant en entrÃ©e un signal numÃ©rique et renvoyant en sortie un signal numÃ©rique (voir figure \ref{deffiltre}). MathÃ©matiquement, un signal numÃ©rique est reprÃ©sentÃ© par une suite de nombres oÃ¹ le $n^{ieme}$ nombre de la suite est notÃ© $x[n]$ ($n \in \mathbb{Z}$). L'annexe \ref{app_sig} prÃ©sente l'allure de plusieurs signaux numÃ©riques en fonction de $n$ (impulsion, echelon, exponentielle rÃ©elle, signal sinusoidal).
 
 \begin{figure}[!h]
 \centering
@@ -62,60 +62,60 @@ Un filtre numérique peut être modélisé par une fonction mathématique prenant en 
 \node[stop,right of=filter] (end) {$y[n]$};
 \draw[->,>=latex] (start) -- (filter);
 \draw[->,>=latex] (filter) -- (end);
-\node[below of=start,node distance=1cm]{Entrée};
+\node[below of=start,node distance=1cm]{EntrÃ©e};
 \node[below of=end,node distance=1cm ]{Sortie};
 \end{tikzpicture}
-\caption{Filtre Numérique}
+\caption{Filtre NumÃ©rique}
 \label{deffiltre}
 \end{figure}
 
-Dans ce document, nous allons nous intéresser à la classe des filtres dits linéaires et invariant dans le temps (LTI). 
+Dans ce document, nous allons nous intÃ©resser Ã  la classe des filtres dits linÃ©aires et invariant dans le temps (LTI). 
 
-\begin{definition}[Filtre LTI] Un filtre LTI respecte les propriétés suivantes:
+\begin{definition}[Filtre LTI] Un filtre LTI respecte les propriÃ©tÃ©s suivantes:
 \begin{itemize}
-\item Linéarité: Si l'entrée du filtre est égale à $x[n]=\alpha x_1[n]+\beta x_2[n]$, alors la sortie sera égale à $y[n]=\alpha y_1[n]+\beta y_2[n]$.
-\item Invariance dans le temps: Si l'entrée du filtre est égale à $x[n]=x_1[n-\tau]$ ($\tau \in \mathbb{Z}$), alors la sortie sera égale à $y[n]=y_1[n-\tau]$.
+\item LinÃ©aritÃ©: Si l'entrÃ©e du filtre est Ã©gale Ã  $x[n]=\alpha x_1[n]+\beta x_2[n]$, alors la sortie sera Ã©gale Ã  $y[n]=\alpha y_1[n]+\beta y_2[n]$.
+\item Invariance dans le temps: Si l'entrÃ©e du filtre est Ã©gale Ã  $x[n]=x_1[n-\tau]$ ($\tau \in \mathbb{Z}$), alors la sortie sera Ã©gale Ã  $y[n]=y_1[n-\tau]$.
 \end{itemize}
 \end{definition}
-Un filtre LTI est entièrement décrit par sa réponse à une entrée de type impulsion ($x[n]=\delta[n]$). La réponse à une entrée de type impulsion est appelée réponse impulsionnelle et est notée $h[n]$. Lorsque l'entrée est un signal quelconque, la propriété suivante montre que la sortie du filtre s'obtient en convoluant l'entrée avec la réponse impulsionnelle du filtre.
-\begin{propriete}[Sortie du filtre] \label{prop0} Lorsqu'un signal $x[n]$ est envoyé à l'entrée d'un filtre LTI, la sortie s'exprime sous la forme
+Un filtre LTI est entiÃ¨rement dÃ©crit par sa rÃ©ponse Ã  une entrÃ©e de type impulsion ($x[n]=\delta[n]$). La rÃ©ponse Ã  une entrÃ©e de type impulsion est appelÃ©e rÃ©ponse impulsionnelle et est notÃ©e $h[n]$. Lorsque l'entrÃ©e est un signal quelconque, la propriÃ©tÃ© suivante montre que la sortie du filtre s'obtient en convoluant l'entrÃ©e avec la rÃ©ponse impulsionnelle du filtre.
+\begin{propriete}[Sortie du filtre] \label{prop0} Lorsqu'un signal $x[n]$ est envoyÃ© Ã  l'entrÃ©e d'un filtre LTI, la sortie s'exprime sous la forme
 \begin{align}
 y[n]=x[n]*h[n] \triangleq \sum_{k=-\infty}^{\infty}x[k]h[n-k]
 \end{align}
-où $*$ désigne le produit de convolution et $h[n]$ correspond à la réponse impulsionnelle du filtre.
+oÃ¹ $*$ dÃ©signe le produit de convolution et $h[n]$ correspond Ã  la rÃ©ponse impulsionnelle du filtre.
 \end{propriete}
 \begin{proof}
 Voir annexe \ref{dprop0}.
 \end{proof}
 
-Une grande partie des filtres LTI peut s'exprimer à partir d'une équation aux différences
+Une grande partie des filtres LTI peut s'exprimer Ã  partir d'une Ã©quation aux diffÃ©rences
 \begin{align}
 y[n]=\sum_{m=0}^{M}b_m x[n-m]-\sum_{l=1}^{L}a_l y[n-l],\label{filtre1}
 \end{align}
-où les coefficients réels $b_m$ ($m=0,\cdots,M$) et $a_l$ ($l=1,\cdots,L$) correspondent respectivement aux coefficients de la partie non récursive et récursive du filtre. Notons que le coefficient multipliant $y[n]$ est implicitement égal à $a_0=1$. L'ordre du filtre est défini comme étant la plus grande valeur entre $M$ et $L$. 
+oÃ¹ les coefficients rÃ©els $b_m$ ($m=0,\cdots,M$) et $a_l$ ($l=1,\cdots,L$) correspondent respectivement aux coefficients de la partie non rÃ©cursive et rÃ©cursive du filtre. Notons que le coefficient multipliant $y[n]$ est implicitement Ã©gal Ã  $a_0=1$. L'ordre du filtre est dÃ©fini comme Ã©tant la plus grande valeur entre $M$ et $L$. 
 
-La réponse impulsionnelle d'un filtre décrit par une équation aux différences s'obtient en posant $x[n]=\delta[n]$ dans l'équation (\ref{filtre1}). En fonction des coefficients $a_k$, il est alors possible de définir deux grandes catégories de filtres:
+La rÃ©ponse impulsionnelle d'un filtre dÃ©crit par une Ã©quation aux diffÃ©rences s'obtient en posant $x[n]=\delta[n]$ dans l'Ã©quation (\ref{filtre1}). En fonction des coefficients $a_k$, il est alors possible de dÃ©finir deux grandes catÃ©gories de filtres:
 \begin{itemize}
-\item les filtres à Réponse Impulsionnelle Finie (FIR) pour lesquels $a_l=0$ pour tout $l>0$,
-\item les filtres à Réponse Impulsionnelle Infinie (IIR) pour lesquels il existe au moins une valeur de $l$ ($l>0$) telle que $a_l\ne 0$.
+\item les filtres Ã  RÃ©ponse Impulsionnelle Finie (FIR) pour lesquels $a_l=0$ pour tout $l>0$,
+\item les filtres Ã  RÃ©ponse Impulsionnelle Infinie (IIR) pour lesquels il existe au moins une valeur de $l$ ($l>0$) telle que $a_l\ne 0$.
 \end{itemize}
 
-\subsection{Problématiques}
+\subsection{ProblÃ©matiques}
 
-Dans ce document, nous allons traiter les problématiques suivantes.
+Dans ce document, nous allons traiter les problÃ©matiques suivantes.
 
 \begin{itemize}
-\item Connaissant la valeur des coefficients $b_m$ et $a_l$, est-il possible de comprendre l'effet d'un filtre sur une entrée quelconque $x[n]$  ? 
-\item Est-il possible de déterminer les coefficients $b_m$ et $a_l$ d'un filtre à partir d'un ensemble de spécifications (fréquentielles ou temporelles) ?
+\item Connaissant la valeur des coefficients $b_m$ et $a_l$, est-il possible de comprendre l'effet d'un filtre sur une entrÃ©e quelconque $x[n]$  ? 
+\item Est-il possible de dÃ©terminer les coefficients $b_m$ et $a_l$ d'un filtre Ã  partir d'un ensemble de spÃ©cifications (frÃ©quentielles ou temporelles) ?
 \end{itemize}
 
 \section{Analyse de Filtre}
 \label{analyse}
 
-Dans cette section, nous allons introduire les outils nécessaires pour l'analyse des filtres numériques. 
+Dans cette section, nous allons introduire les outils nÃ©cessaires pour l'analyse des filtres numÃ©riques. 
 
 Pour illustrer le contenu de cette section, nous allons analyser le filtre d'ordre 2 suivant.
-\begin{exemple}[Filtre 1] Le filtre 1 est décrit par l'équation aux différences 
+\begin{exemple}[Filtre 1] Le filtre 1 est dÃ©crit par l'Ã©quation aux diffÃ©rences 
 \begin{align*}
 y[n]&=0.065x[n]+0.13 x[n-1]+0.065x[n-2])\\
 &+1.143y[n-1]-0.413y[n-2].
@@ -124,18 +124,18 @@ y[n]&=0.065x[n]+0.13 x[n-1]+0.065x[n-2])\\
 
 \subsection{Analyse en $\mathcal{Z}$}
 
-\begin{definition}[Transformée en $\mathcal{Z}$]
-La transformée en $\mathcal{Z}$ d'une suite numérique $x[n]$ est définie par l'équation
+\begin{definition}[TransformÃ©e en $\mathcal{Z}$]
+La transformÃ©e en $\mathcal{Z}$ d'une suite numÃ©rique $x[n]$ est dÃ©finie par l'Ã©quation
 \begin{align}
 X(z)&\triangleq \sum_{n=-\infty}^{\infty}x[n]z^{-n}
 \end{align}
-où $z$ est une variable complexe.
+oÃ¹ $z$ est une variable complexe.
 \end{definition}
-Il est important de noter que la transformée de $\mathcal{Z}$ d'un signal ne converge pas nécessairement quelque soit $z \in \mathbb{Z}$. Il est alors nécessaire de préciser la région de convergence (ROC) pour laquelle la série converge c-a-d les valeurs de $z$ telles que $|X(z)|<\infty$. A titre d'illustration, le tableau \ref{app_tabZ} présente les transformées en $\mathcal{Z}$ de plusieurs signaux et leurs regions de convergence associées.
+Il est important de noter que la transformÃ©e de $\mathcal{Z}$ d'un signal ne converge pas nÃ©cessairement quelque soit $z \in \mathbb{Z}$. Il est alors nÃ©cessaire de prÃ©ciser la rÃ©gion de convergence (ROC) pour laquelle la sÃ©rie converge c-a-d les valeurs de $z$ telles que $|X(z)|<\infty$. A titre d'illustration, le tableau \ref{app_tabZ} prÃ©sente les transformÃ©es en $\mathcal{Z}$ de plusieurs signaux et leurs regions de convergence associÃ©es.
 
 \begin{table}[!t]
 \begin{tabular}{ccc}
-Signal  & Transformée en $\mathcal{Z}$ & ROC\\
+Signal  & TransformÃ©e en $\mathcal{Z}$ & ROC\\
 \hline
 $\delta[n]$ & $1$ & $z \in \mathbb{Z}$\\
 $u[n]$& $\frac{1}{1-z^{-1}}$ & $|z| > 1$\\ 
@@ -148,36 +148,36 @@ $r^n\cos (\omega_0 n)u[n]$& $\frac{1-r\cos(\omega_0)z^{-1}}{1-2r\cos(\omega_0)z^
 $r^n\sin (\omega_0 n)u[n]$& $\frac{r\sin(\omega_0)z^{-1}}{1-2r\cos(\omega_0)z^{-1}+r^2z^{-2}}$ & $|z| > r$ \\ 
 \hline
 \end{tabular}
-\caption{Quelques transformées en $\mathcal{Z}$}\label{app_tabZ}
+\caption{Quelques transformÃ©es en $\mathcal{Z}$}\label{app_tabZ}
 \end{table}
 
-\begin{propriete}[Transformée en $\mathcal{Z}$] La transformée en $\mathcal{Z}$ possède les propriétés suivantes (les réciproques étant également vraies):
+\begin{propriete}[TransformÃ©e en $\mathcal{Z}$] La transformÃ©e en $\mathcal{Z}$ possÃ¨de les propriÃ©tÃ©s suivantes (les rÃ©ciproques Ã©tant Ã©galement vraies):
 \begin{enumerate}
-\item Linéarité: Si $y[n]=\alpha x_1[n]+\beta x_2[n]$, alors $Y(z)=\alpha X_1(z)+\beta X_2(z)$.
-\item Décalage temporel: Si $y[n]=x[n-\tau]$ ($\tau \in \mathbb{Z}$), alors $Y(z)=X(z)z^{-\tau}$.
+\item LinÃ©aritÃ©: Si $y[n]=\alpha x_1[n]+\beta x_2[n]$, alors $Y(z)=\alpha X_1(z)+\beta X_2(z)$.
+\item DÃ©calage temporel: Si $y[n]=x[n-\tau]$ ($\tau \in \mathbb{Z}$), alors $Y(z)=X(z)z^{-\tau}$.
 \item Multiplication par une fonction exponentielle: Si $y[n]= a^n x[n]$, alors $ Y(z)=X(z/a)$.
 \item Convolution: Si $y[n]= h[n]*x[n]$, alors $ Y(z)=H(z)X(z)$.
-\item Théorème de la valeur finale: $\lim_{n\to \infty} x[n]=\lim_{z\to 1}(z-1)X(z)$.
+\item ThÃ©orÃ¨me de la valeur finale: $\lim_{n\to \infty} x[n]=\lim_{z\to 1}(z-1)X(z)$.
 \end{enumerate}
 \end{propriete}
 
-La propriété liée au décalage temporel indique qu'un retard d'un échantillon dans le domaine temporel revient à multiplier la transformée en $\mathcal{Z}$ par $z^{-1}$. En utilisant cette propriété, l'équation aux différences peut être représentée graphiquement par un schéma bloc où les blocs de fonction de transfert $z^{-1}$ introduisent un retard d'un échantillon. A titre d'exemple, la figure \ref{fig_schema} présente le schéma bloc du filtre~1.
+La propriÃ©tÃ© liÃ©e au dÃ©calage temporel indique qu'un retard d'un Ã©chantillon dans le domaine temporel revient Ã  multiplier la transformÃ©e en $\mathcal{Z}$ par $z^{-1}$. En utilisant cette propriÃ©tÃ©, l'Ã©quation aux diffÃ©rences peut Ãªtre reprÃ©sentÃ©e graphiquement par un schÃ©ma bloc oÃ¹ les blocs de fonction de transfert $z^{-1}$ introduisent un retard d'un Ã©chantillon. A titre d'exemple, la figure \ref{fig_schema} prÃ©sente le schÃ©ma bloc du filtre~1.
 
 \begin{figure}[!h]
 \input{./tikz/block_diagram.tikz}
-\caption{Schéma bloc du filtre 1.}\label{fig_schema}
+\caption{SchÃ©ma bloc du filtre 1.}\label{fig_schema}
 \end{figure}
 
-La propriété liée à la convolution montre l'importance de la transformée en $\mathcal{Z}$ de la réponse impulsionnelle, $H(z)$. Cette transformée en $\mathcal{Z}$ est appelé fonction de transfert du filtre. 
+La propriÃ©tÃ© liÃ©e Ã  la convolution montre l'importance de la transformÃ©e en $\mathcal{Z}$ de la rÃ©ponse impulsionnelle, $H(z)$. Cette transformÃ©e en $\mathcal{Z}$ est appelÃ© fonction de transfert du filtre. 
 \begin{definition}[Fonction de Transfert]
-La fonction de transfert d'un filtre correspond à la transformée en $\mathcal{Z}$ de sa réponse impulsionnelle c-a-d
+La fonction de transfert d'un filtre correspond Ã  la transformÃ©e en $\mathcal{Z}$ de sa rÃ©ponse impulsionnelle c-a-d
 \begin{align}
 H(z)&=\sum_{n=-\infty}^{\infty}h[n]z^{-n}
 \end{align}
 \end{definition}
 
-La propriété liée à la convolution montre que la fonction de transfert d'un filtre s'exprime également sous la forme $H(z)=Y(z)/X(z)$. Pour un filtre décrit par une équation aux différences, cette propriété permet d'exprimer la fonction de transfert du filtre en fonction des coefficients des parties récursive $a_l$ et non-recursive $b_m$ du filtre.
-\begin{proposition}[Expression de la Fonction de transfert d'un filtre] La fonction de transfert d'un filtre numérique décrit par une équation aux différences s'exprime sous la forme ($a_0\triangleq 1$)
+La propriÃ©tÃ© liÃ©e Ã  la convolution montre que la fonction de transfert d'un filtre s'exprime Ã©galement sous la forme $H(z)=Y(z)/X(z)$. Pour un filtre dÃ©crit par une Ã©quation aux diffÃ©rences, cette propriÃ©tÃ© permet d'exprimer la fonction de transfert du filtre en fonction des coefficients des parties rÃ©cursive $a_l$ et non-recursive $b_m$ du filtre.
+\begin{proposition}[Expression de la Fonction de transfert d'un filtre] La fonction de transfert d'un filtre numÃ©rique dÃ©crit par une Ã©quation aux diffÃ©rences s'exprime sous la forme ($a_0\triangleq 1$)
 \begin{align*}
 H(z)=\frac{\sum_{m=0}^{M}b_m z^{-m}}{\sum_{l=0}^{L}a_l z^{-l}}=\frac{B(z)}{A(z)}
 \end{align*}\label{prop_ft}
@@ -186,11 +186,11 @@ H(z)=\frac{\sum_{m=0}^{M}b_m z^{-m}}{\sum_{l=0}^{L}a_l z^{-l}}=\frac{B(z)}{A(z)}
 Voir annexe \ref{dprop_ft}.
 \end{proof}
 
-A titre d'exemple, il est possible de montrer que la fonction de transfert du filtre 1 est donnée par 
+A titre d'exemple, il est possible de montrer que la fonction de transfert du filtre 1 est donnÃ©e par 
 \begin{align}
 H(z)=\frac{0.065+0.13 z^{-1}+0.065z^{-2}}{1-1.143z^{-1}+0.413z^{-2}}.
 \end{align}
-%Dans le domaine en $\mathcal{Z}$, la sortie est égale à la fonction de transfert multipliée par l'entrée c-a-d $Y(z)=H(z)X(z)$. Par exemple, si l'entrée du filtre 1 est un échelon unitaire, la transformée en $\mathcal{Z}$ de la sortie sera égale à $Y(z)=H(z)/(1-z^{-1})$. En utilisant le théorème de la valeur finale, nous pouvons alors anticiper qu'en temporel la valeur finale sera égale à $\lim_{n\to\infty}y[n]=H(1)=1$. La figure \ref{fig_r_step} présente la réponse du filtre 1 lorsqu'un échelon unitaire est envoyé en entrée. Nous pouvons constater qu'effectivement la valeur finale est bien égale à~$1$.
+%Dans le domaine en $\mathcal{Z}$, la sortie est Ã©gale Ã  la fonction de transfert multipliÃ©e par l'entrÃ©e c-a-d $Y(z)=H(z)X(z)$. Par exemple, si l'entrÃ©e du filtre 1 est un Ã©chelon unitaire, la transformÃ©e en $\mathcal{Z}$ de la sortie sera Ã©gale Ã  $Y(z)=H(z)/(1-z^{-1})$. En utilisant le thÃ©orÃ¨me de la valeur finale, nous pouvons alors anticiper qu'en temporel la valeur finale sera Ã©gale Ã  $\lim_{n\to\infty}y[n]=H(1)=1$. La figure \ref{fig_r_step} prÃ©sente la rÃ©ponse du filtre 1 lorsqu'un Ã©chelon unitaire est envoyÃ© en entrÃ©e. Nous pouvons constater qu'effectivement la valeur finale est bien Ã©gale Ã ~$1$.
 %
 %\begin{figure}[!t]
 %\centering
@@ -198,16 +198,16 @@ H(z)=\frac{0.065+0.13 z^{-1}+0.065z^{-2}}{1-1.143z^{-1}+0.413z^{-2}}.
 %\addplot+[ycomb,color=black,mark options={fill=black}] table[x index=0,y index=2,col sep = comma] {./csv/r_step_0.txt};
 %\end{axis}
 %\end{tikzpicture}
-%\caption{Réponse à un échelon unitaire (filtre 1).}\label{fig_r_step}
+%\caption{RÃ©ponse Ã  un Ã©chelon unitaire (filtre 1).}\label{fig_r_step}
 %\end{figure}
 
-La figure \ref{fig_abs_z} présente le module de la fonction de transfert, $|H(z)|$, pour le filtre 1. Cette figure montre que le module de la fonction de transfert possède des "pics" et des "vallées". Pour mettre en évidence ces comportements singuliers, il est possible de réexprimer la fonction de transfert sous une forme factorisée. La forme factorisée donne explicitement les valeurs de $z$ pour lesquelles $H(z)$ tend vers $0$ (zéros) et les valeurs de $z$ pour lesquelles $H(z)$ tend vers l'infini (pôles). 
+La figure \ref{fig_abs_z} prÃ©sente le module de la fonction de transfert, $|H(z)|$, pour le filtre 1. Cette figure montre que le module de la fonction de transfert possÃ¨de des "pics" et des "vallÃ©es". Pour mettre en Ã©vidence ces comportements singuliers, il est possible de rÃ©exprimer la fonction de transfert sous une forme factorisÃ©e. La forme factorisÃ©e donne explicitement les valeurs de $z$ pour lesquelles $H(z)$ tend vers $0$ (zÃ©ros) et les valeurs de $z$ pour lesquelles $H(z)$ tend vers l'infini (pÃ´les). 
 
-\begin{definition}[Pôles et Zéros] Une fonction de transfert peut s'exprimer sous forme factorisée de la manière suivante
+\begin{definition}[PÃ´les et ZÃ©ros] Une fonction de transfert peut s'exprimer sous forme factorisÃ©e de la maniÃ¨re suivante
 \begin{align*}
 H(z)=\left(\frac{b_0}{a_0}\right)\frac{\prod_{m=1}^{M}(1-c_m z^{-1})}{\prod_{l=1}^{L}(1-d_l z^{-1})}
 \end{align*}
-où les valeurs $c_m$ et $d_l$ correspondent respectivement aux zéros et aux pôles de la fonction de transfert.
+oÃ¹ les valeurs $c_m$ et $d_l$ correspondent respectivement aux zÃ©ros et aux pÃ´les de la fonction de transfert.
 \end{definition}
 
 \begin{figure}[!t]
@@ -217,7 +217,7 @@ où les valeurs $c_m$ et $d_l$ correspondent respectivement aux zéros et aux pôle
 \label{fig_abs_z}
 \end{figure}
 
-En pratique, les pôles et les zéros s'obtiennent le plus souvent en utilisant des algorithmes numériques. A titre d'illustration, la fonction Python \texttt{root} permet d'établir que le filtre 1 possède un zéro double en $z=-1$ et deux pôles complexes conjugués en $z=0.57\pm 0.29j$. Notons que comme les coefficients $a_l$ et $b_m$ sont réels, les pôles et zéros complexes sont nécessairement conjugués. Il est courant de représenter la localisation des pôles et des zéros dans le plan complexe. Par convention, les pôles sont indiqués avec un $\times$ et les zéros avec un $\circ$. La figure \ref{fig_carte_pz} présente la localisation des pôles et des zéros pour le filtre 1.
+En pratique, les pÃ´les et les zÃ©ros s'obtiennent le plus souvent en utilisant des algorithmes numÃ©riques. A titre d'illustration, la fonction Python \texttt{root} permet d'Ã©tablir que le filtre 1 possÃ¨de un zÃ©ro double en $z=-1$ et deux pÃ´les complexes conjuguÃ©s en $z=0.57\pm 0.29j$. Notons que comme les coefficients $a_l$ et $b_m$ sont rÃ©els, les pÃ´les et zÃ©ros complexes sont nÃ©cessairement conjuguÃ©s. Il est courant de reprÃ©senter la localisation des pÃ´les et des zÃ©ros dans le plan complexe. Par convention, les pÃ´les sont indiquÃ©s avec un $\times$ et les zÃ©ros avec un $\circ$. La figure \ref{fig_carte_pz} prÃ©sente la localisation des pÃ´les et des zÃ©ros pour le filtre 1.
 
 \begin{figure*}[t]
 \begin{subfigure}[b]{0.5\textwidth}
@@ -228,7 +228,7 @@ En pratique, les pôles et les zéros s'obtiennent le plus souvent en utilisant de
 \addplot [color=black,mark=o,mark options={scale=2}] coordinates {(-1,0)};
 \addplot [dashed,domain=0:2*pi,samples=50]({cos(deg(x))},{sin(deg(x))});
 \end{axis}\end{tikzpicture}
-\caption{Filtre 1a: Cartographie des Pôles et des Zéros}
+\caption{Filtre 1a: Cartographie des PÃ´les et des ZÃ©ros}
 \label{fig_carte_pz}
 \end{subfigure}%
 \begin{subfigure}[b]{0.5\textwidth}
@@ -237,7 +237,7 @@ En pratique, les pôles et les zéros s'obtiennent le plus souvent en utilisant de
 \addplot+[ycomb,color=black,mark options={fill=black}] table[x expr=\coordindex,y index=0] {./csv/ri_0.txt};
 \end{axis}
 \end{tikzpicture}
-\caption{Filtre 1a: Réponse Impulsionnelle}
+\caption{Filtre 1a: RÃ©ponse Impulsionnelle}
 \end{subfigure}
 \vskip 1em
 \begin{subfigure}[b]{0.5\textwidth}
@@ -250,7 +250,7 @@ En pratique, les pôles et les zéros s'obtiennent le plus souvent en utilisant de
 \addplot [color=black,mark=o,mark options={scale=2}] coordinates {(-1,0)};
 \addplot [dashed,domain=0:2*pi,samples=50]({cos(deg(x))},{sin(deg(x))});
 \end{axis}\end{tikzpicture}
-\caption{Filtre 1b: Cartographie des Pôles et des Zéros}
+\caption{Filtre 1b: Cartographie des PÃ´les et des ZÃ©ros}
 \end{subfigure}%
 \begin{subfigure}[b]{0.5\textwidth}
 \centering
@@ -258,13 +258,13 @@ En pratique, les pôles et les zéros s'obtiennent le plus souvent en utilisant de
 \addplot+[ycomb,color=black,mark options={fill=black}] table[x expr=\coordindex,y index=0] {./csv/ri_1.txt};
 \end{axis}
 \end{tikzpicture}
-\caption{Filtre 1b: Réponse Impulsionnelle}
+\caption{Filtre 1b: RÃ©ponse Impulsionnelle}
 \end{subfigure}
-\caption{Lien entre la localisation des pôles et zéros et la réponse impulsionnelle.\label{fig_pz_imp}}
+\caption{Lien entre la localisation des pÃ´les et zÃ©ros et la rÃ©ponse impulsionnelle.\label{fig_pz_imp}}
 \end{figure*}
 
-La localisation des pôles joue un rôle de premier plan sur la propriété de stabilité du filtre. De manière formelle, un filtre est dit stable si sa réponse impulsionnelle est absolument sommable c-a-d $\sum_{n=-\infty}^{\infty}|h[n]|<\infty$. La propriété suivante montre que cette propriété est directement liée au module des pôles de la fonction de transfert.
-\begin{propriete}[Stabilité] Un filtre est stable si tous les pôles de sa fonction de transfert sont inclus dans le cercle de rayon unité c-a-d si pour tout $l$ 
+La localisation des pÃ´les joue un rÃ´le de premier plan sur la propriÃ©tÃ© de stabilitÃ© du filtre. De maniÃ¨re formelle, un filtre est dit stable si sa rÃ©ponse impulsionnelle est absolument sommable c-a-d $\sum_{n=-\infty}^{\infty}|h[n]|<\infty$. La propriÃ©tÃ© suivante montre que cette propriÃ©tÃ© est directement liÃ©e au module des pÃ´les de la fonction de transfert.
+\begin{propriete}[StabilitÃ©] Un filtre est stable si tous les pÃ´les de sa fonction de transfert sont inclus dans le cercle de rayon unitÃ© c-a-d si pour tout $l$ 
 \begin{align}
 |d_l|\le 1.
 \end{align}
@@ -273,18 +273,18 @@ La localisation des pôles joue un rôle de premier plan sur la propriété de stabi
 \begin{proof}
 Voir annexe \ref{dprop1}.
 \end{proof}
-La figure \ref{fig_pz_imp} présente la localisation des pôles et des zéros ainsi que la réponse impulsionnelle de deux filtres IIR. Le premier filtre est stable car tous ses pôles sont inclus dans le cercle de rayon unité. A l'inverse, le second filtre est instable car il possède un pôle en $z=-1.4$ dont le module est supérieur à 1. Pour ce second filtre, nous constatons que la réponse impulsionnelle semble tendre vers des valeurs infinies.
+La figure \ref{fig_pz_imp} prÃ©sente la localisation des pÃ´les et des zÃ©ros ainsi que la rÃ©ponse impulsionnelle de deux filtres IIR. Le premier filtre est stable car tous ses pÃ´les sont inclus dans le cercle de rayon unitÃ©. A l'inverse, le second filtre est instable car il possÃ¨de un pÃ´le en $z=-1.4$ dont le module est supÃ©rieur Ã  1. Pour ce second filtre, nous constatons que la rÃ©ponse impulsionnelle semble tendre vers des valeurs infinies.
 
-\subsection{Analyse Fréquentielle}
-Le domaine fréquentielle est très utilisé pour analyser le comportement des filtres LTI. Le succès de ce domaine d'analyse est principalement lié au fait que la réponse d'un filtre à une exponentielle complexe de pulsation $\omega$ est une exponentielle complexe de même pulsation, multipliée par un coefficient complexe. Ce coefficient multiplicateur s'obtient à partir de la transformée de Fourier de la réponse impulsionnelle.
+\subsection{Analyse FrÃ©quentielle}
+Le domaine frÃ©quentielle est trÃ¨s utilisÃ© pour analyser le comportement des filtres LTI. Le succÃ¨s de ce domaine d'analyse est principalement liÃ© au fait que la rÃ©ponse d'un filtre Ã  une exponentielle complexe de pulsation $\omega$ est une exponentielle complexe de mÃªme pulsation, multipliÃ©e par un coefficient complexe. Ce coefficient multiplicateur s'obtient Ã  partir de la transformÃ©e de Fourier de la rÃ©ponse impulsionnelle.
 
-\begin{definition}[Transformée de Fourier]
+\begin{definition}[TransformÃ©e de Fourier]
 \label{prop_f}
-Une suite numérique $x[n]$ peut se décomposer sous la forme 
+Une suite numÃ©rique $x[n]$ peut se dÃ©composer sous la forme 
 \begin{align}
 x[n]&= \frac{1}{2\pi}\int_{-\pi}^{\pi} X(e^{j\omega})e^{j\omega n}d\omega \label{e_def_if}
 \end{align}
-où la quantité $X(e^{j\omega})$ correspond à la transformée de Fourier (à temps discret) de $x[n]$. Cette quantité est définie par
+oÃ¹ la quantitÃ© $X(e^{j\omega})$ correspond Ã  la transformÃ©e de Fourier (Ã  temps discret) de $x[n]$. Cette quantitÃ© est dÃ©finie par
 \begin{align}
 X(e^{j\omega})&\triangleq \sum_{n=-\infty}^{\infty}x[n]e^{-j\omega n}.
 \end{align}
@@ -293,12 +293,12 @@ X(e^{j\omega})&\triangleq \sum_{n=-\infty}^{\infty}x[n]e^{-j\omega n}.
 Voir annexe \ref{dprop_f}.
 \end{proof}
 
-\begin{proposition}[Lien Transformée en $\mathcal{Z}$ et Transformée de Fourier]
-La transformée de Fourier s'obtient en évaluant la transformée en $\mathcal{Z}$ sur le cercle de rayon unité c-a-d $z=e^{j\omega}$.
+\begin{proposition}[Lien TransformÃ©e en $\mathcal{Z}$ et TransformÃ©e de Fourier]
+La transformÃ©e de Fourier s'obtient en Ã©valuant la transformÃ©e en $\mathcal{Z}$ sur le cercle de rayon unitÃ© c-a-d $z=e^{j\omega}$.
 \end{proposition}
 
 
-Comme $X(e^{j\omega})=X(e^{j(\omega+2k\pi)})$ ($k \in \mathbb{Z}$), la transformée de Fourier à temps discret est $2\pi$-périodique. De plus lorsque $x[n]\in \mathbb{R}$, il est possible de démontrer que $X(e^{j\omega})=X^{*}(e^{-j\omega})$ (symétrie hermitienne). Pour ces deux raisons, la transformée de Fourier est couramment représentée dans l'intervalle $[0,\pi]$.
+Comme $X(e^{j\omega})=X(e^{j(\omega+2k\pi)})$ ($k \in \mathbb{Z}$), la transformÃ©e de Fourier Ã  temps discret est $2\pi$-pÃ©riodique. De plus lorsque $x[n]\in \mathbb{R}$, il est possible de dÃ©montrer que $X(e^{j\omega})=X^{*}(e^{-j\omega})$ (symÃ©trie hermitienne). Pour ces deux raisons, la transformÃ©e de Fourier est couramment reprÃ©sentÃ©e dans l'intervalle $[0,\pi]$.
 
 
 
@@ -322,29 +322,29 @@ Comme $X(e^{j\omega})=X(e^{j(\omega+2k\pi)})$ ($k \in \mathbb{Z}$), la transform
 \end{tikzpicture}
 \caption{Argument }
 \end{subfigure}
-\caption{Réponse fréquentielle (filtre 1).}
+\caption{RÃ©ponse frÃ©quentielle (filtre 1).}
 \label{fig_z2f}
 \end{figure*}
 
-Pour un filtre LTI, la transformée de Fourier de la sortie s'obtient en multipliant la transformée de Fourier de la réponse impulsionnelle par la transformée de Fourier de l'entrée c-a-d $Y(e^{j\omega})=H(e^{j\omega})X(e^{j\omega})$. La transformée de Fourier de la réponse impulsionnelle est appelée réponse fréquentielle du filtre.
+Pour un filtre LTI, la transformÃ©e de Fourier de la sortie s'obtient en multipliant la transformÃ©e de Fourier de la rÃ©ponse impulsionnelle par la transformÃ©e de Fourier de l'entrÃ©e c-a-d $Y(e^{j\omega})=H(e^{j\omega})X(e^{j\omega})$. La transformÃ©e de Fourier de la rÃ©ponse impulsionnelle est appelÃ©e rÃ©ponse frÃ©quentielle du filtre.
 
-\begin{definition}[Réponse fréquentielle]
-La réponse fréquentielle d'un filtre correspond à la transformée de Fourier de sa réponse impulsionnelle c-a-d
+\begin{definition}[RÃ©ponse frÃ©quentielle]
+La rÃ©ponse frÃ©quentielle d'un filtre correspond Ã  la transformÃ©e de Fourier de sa rÃ©ponse impulsionnelle c-a-d
 \begin{align}
 H(e^{j\omega})=\sum_{n=-\infty}^{\infty}h[n]e^{-j\omega n}
 \end{align}
 \end{definition}
-La réponse frequentielle $H(e^{j\omega})$ est généralement une quantité complexe qu'il est possible d'analyser via son module et son argument.
-\begin{proposition}[Module / Argument de la réponse fréquentielle]
-La fonction de transfert $H(e^{j\omega})$ peut se décomposer sous la forme
+La rÃ©ponse frequentielle $H(e^{j\omega})$ est gÃ©nÃ©ralement une quantitÃ© complexe qu'il est possible d'analyser via son module et son argument.
+\begin{proposition}[Module / Argument de la rÃ©ponse frÃ©quentielle]
+La fonction de transfert $H(e^{j\omega})$ peut se dÃ©composer sous la forme
 \begin{align}
 H(e^{j\omega})=|H(e^{j\omega})| e^{j Arg[H(e^{j\omega})]},
 \end{align} 
-où $|H(e^{j\omega})|$ et $Arg[H(e^{j\omega})]$ désignent respectivement le module et l'argument. 
+oÃ¹ $|H(e^{j\omega})|$ et $Arg[H(e^{j\omega})]$ dÃ©signent respectivement le module et l'argument. 
 \end{proposition}
 
-Pour analyser le comportement d'un filtre, il est utile de représenter le module et l'argument de la réponse fréquentielle en fonction de $\omega$. L'affichage du module et de l'argument permet d'avoir une interprétation concrète de l'effet du filtre sur une entrée quelconque. En effet à la pulsation $\omega$, le filtre va appliquer un gain $|H(e^{j\omega})|$ et un déphasage (retard) $Arg[H(e^{j\omega})]$. A titre d'illustration, la figure \ref{fig_z2f} présente le module et l'argument de la réponse fréquentielle du filtre 1. Nous observons que le filtre se comporte comme un filtre passe-bas. Notons que lorsque l'argument est égal à $Arg[H(e^{j\omega})]=-\omega \tau$, ce qui n'est pas le cas ici, le filtre est dit à phase linéaire. En pratique, cette propriété est souvent recherchée car elle évite la présence de distorsion de phase.
-%A titre d'illustration, la figure \ref{fig_r_sine} présente la réponse temporel du filtre lorsque qu'une sinusoïde de pulsation $\omega_0=0.7$ rad/ech est appliqué en entrée. A cette pulsation, la réponse fréquentielle du filtre indique que le filtre applique un gain $\approx$ 0.6 et un déphasage de $-1.7$ radian ($\approx 2.3$ échantillons). Ces valeurs se vérifient également à partir de la réponse temporel du filtre.
+Pour analyser le comportement d'un filtre, il est utile de reprÃ©senter le module et l'argument de la rÃ©ponse frÃ©quentielle en fonction de $\omega$. L'affichage du module et de l'argument permet d'avoir une interprÃ©tation concrÃ¨te de l'effet du filtre sur une entrÃ©e quelconque. En effet Ã  la pulsation $\omega$, le filtre va appliquer un gain $|H(e^{j\omega})|$ et un dÃ©phasage (retard) $Arg[H(e^{j\omega})]$. A titre d'illustration, la figure \ref{fig_z2f} prÃ©sente le module et l'argument de la rÃ©ponse frÃ©quentielle du filtre 1. Nous observons que le filtre se comporte comme un filtre passe-bas. Notons que lorsque l'argument est Ã©gal Ã  $Arg[H(e^{j\omega})]=-\omega \tau$, ce qui n'est pas le cas ici, le filtre est dit Ã  phase linÃ©aire. En pratique, cette propriÃ©tÃ© est souvent recherchÃ©e car elle Ã©vite la prÃ©sence de distorsion de phase.
+%A titre d'illustration, la figure \ref{fig_r_sine} prÃ©sente la rÃ©ponse temporel du filtre lorsque qu'une sinusoÃ¯de de pulsation $\omega_0=0.7$ rad/ech est appliquÃ© en entrÃ©e. A cette pulsation, la rÃ©ponse frÃ©quentielle du filtre indique que le filtre applique un gain $\approx$ 0.6 et un dÃ©phasage de $-1.7$ radian ($\approx 2.3$ Ã©chantillons). Ces valeurs se vÃ©rifient Ã©galement Ã  partir de la rÃ©ponse temporel du filtre.
 %
 %\begin{figure*}
 %\begin{subfigure}[b]{0.5\linewidth}
@@ -353,7 +353,7 @@ Pour analyser le comportement d'un filtre, il est utile de représenter le module
 %\addplot+[ycomb,color=black,mark options={fill=black}] table[x index=0,y index=1,col sep = comma] {./csv/r_sine_0.txt};
 %\end{axis}
 %\end{tikzpicture}
-%\caption{Entrée: $x[n]$.}
+%\caption{EntrÃ©e: $x[n]$.}
 %\end{subfigure}%
 %\begin{subfigure}[b]{0.5\linewidth}
 %\centering
@@ -363,20 +363,20 @@ Pour analyser le comportement d'un filtre, il est utile de représenter le module
 %\end{tikzpicture}
 %\caption{Sortie: $y[n]$.}
 %\end{subfigure}
-%\caption{Réponse à une sinusoïde de pulsation $\omega_0=0.7$ rad/éch (filtre 1).}\label{fig_r_sine}
+%\caption{RÃ©ponse Ã  une sinusoÃ¯de de pulsation $\omega_0=0.7$ rad/Ã©ch (filtre 1).}\label{fig_r_sine}
 %\end{figure*}
 
 
-Pour les filtres décrits par une équation aux différences, la réponse fréquentielle peut s'exprimer en fonction de la transformée de Fourier des coefficients $a_l$ et $b_m$ du filtre.
-\begin{proposition}[Réponse Frequentielle]
-La réponse fréquentielle d'un filtre s'exprime sous la forme
+Pour les filtres dÃ©crits par une Ã©quation aux diffÃ©rences, la rÃ©ponse frÃ©quentielle peut s'exprimer en fonction de la transformÃ©e de Fourier des coefficients $a_l$ et $b_m$ du filtre.
+\begin{proposition}[RÃ©ponse Frequentielle]
+La rÃ©ponse frÃ©quentielle d'un filtre s'exprime sous la forme
 \begin{align*}
 H(e^{j\omega})\triangleq \frac{Y(e^{j\omega})}{X(e^{j\omega})}=\frac{\sum_{k=0}^{M}b_m e^{-j\omega k}}{\sum_{l=0}^{N}a_l e^{-j\omega l}}=\frac{B(e^{j\omega})}{A(e^{j\omega})}
 \end{align*}
 \end{proposition}
 Le module et l'argument s'expriment alors sous la forme suivante.
-\begin{proposition}[Module et Argument de la Réponse Frequentielle]
-Le module est l'argument de la réponse fréquentielle s'expriment sous la forme
+\begin{proposition}[Module et Argument de la RÃ©ponse Frequentielle]
+Le module est l'argument de la rÃ©ponse frÃ©quentielle s'expriment sous la forme
 \begin{align*}
 |H(e^{j\omega})|&=\frac{|B(e^{j\omega})|}{|A(e^{j\omega})|}\\
 Arg[H(e^{j\omega})]&=Arg[B(e^{j\omega})]-Arg[A(e^{j\omega})]
@@ -385,22 +385,22 @@ Arg[H(e^{j\omega})]&=Arg[B(e^{j\omega})]-Arg[A(e^{j\omega})]
 
 \subsection{Comparaison des filtres FIR et IIR}
 
-En utilisant les résultats précédents, il est possible de démontrer que les filtres FIR et IIR possèdent des propriétés bien différentes.
+En utilisant les rÃ©sultats prÃ©cÃ©dents, il est possible de dÃ©montrer que les filtres FIR et IIR possÃ¨dent des propriÃ©tÃ©s bien diffÃ©rentes.
 \begin{itemize}
-\item \textbf{Filtres FIR}. Comme $a_l=0$ pour tout $l\ne 0$, les filtres FIR n'ont pas de partie récursive. Ces filtres n'ont pas de pôle et sont donc nécessairement stables. Dans le cas où les coefficients du filtre sont symétriques, c-a-d $b_m=b_{M-k}$, il est possible de démontrer que la phase est linéaire, c-a-d $Arg[H(e^{j\omega})]=-\omega \tau$. L'inconvénient majeur des filtres FIR réside dans la pente de $|H(e^{j\omega})|$. En effet, il est nécessaire d'utiliser un ordre $M$ élevé pour obtenir un filtre avec une pente élevée.
-\item \textbf{Filtres IIR}. Les filtres IIR possèdent une partie récursive et donc un ou des pôles $d_l$. Un filtre IIR est stable si tous ses pôles sont inclus dans le cercle de rayon unité. La phase d'un filtre IIR ne peut pas être linéaire et est généralement difficile à contrôler. Par rapport à des filtres FIR de même ordre, les filtres IIR présentent l'avantage d'avoir des pentes nettement plus élevées. 
+\item \textbf{Filtres FIR}. Comme $a_l=0$ pour tout $l\ne 0$, les filtres FIR n'ont pas de partie rÃ©cursive. Ces filtres n'ont pas de pÃ´le et sont donc nÃ©cessairement stables. Dans le cas oÃ¹ les coefficients du filtre sont symÃ©triques, c-a-d $b_m=b_{M-k}$, il est possible de dÃ©montrer que la phase est linÃ©aire, c-a-d $Arg[H(e^{j\omega})]=-\omega \tau$. L'inconvÃ©nient majeur des filtres FIR rÃ©side dans la pente de $|H(e^{j\omega})|$. En effet, il est nÃ©cessaire d'utiliser un ordre $M$ Ã©levÃ© pour obtenir un filtre avec une pente Ã©levÃ©e.
+\item \textbf{Filtres IIR}. Les filtres IIR possÃ¨dent une partie rÃ©cursive et donc un ou des pÃ´les $d_l$. Un filtre IIR est stable si tous ses pÃ´les sont inclus dans le cercle de rayon unitÃ©. La phase d'un filtre IIR ne peut pas Ãªtre linÃ©aire et est gÃ©nÃ©ralement difficile Ã  contrÃ´ler. Par rapport Ã  des filtres FIR de mÃªme ordre, les filtres IIR prÃ©sentent l'avantage d'avoir des pentes nettement plus Ã©levÃ©es. 
 \end{itemize}
-L'ensemble de ces propriétés est résumé dans le tableau~\ref{t_comp_filtres}.
+L'ensemble de ces propriÃ©tÃ©s est rÃ©sumÃ© dans le tableau~\ref{t_comp_filtres}.
 \begin{table}
 \centering
 \begin{tabular}{ccc}
 & FIR & IIR \\
 \hline
-Partie récursive  & Non & Oui\\
-Pôles & Non & Oui \\
+Partie rÃ©cursive  & Non & Oui\\
+PÃ´les & Non & Oui \\
 Stable & Oui & Oui si $|d_l|<1$\\
-Phase Linéaire & Oui si  $b_m=b_{M-k}$& Non\\
-Ordre & Elevé & Faible \\
+Phase LinÃ©aire & Oui si  $b_m=b_{M-k}$& Non\\
+Ordre & ElevÃ© & Faible \\
 \hline
 \end{tabular}
 \caption{Comparaison des filtres FIR et IIR}\label{t_comp_filtres}
@@ -408,32 +408,32 @@ Ordre & Elevé & Faible \\
 
 
 
-\section{Synthèse par numérisation de filtres analogiques}
+\section{SynthÃ¨se par numÃ©risation de filtres analogiques}
 
-Pour concevoir un filtre numérique IIR, une technique possible consiste à convertir un filtre analogique. En utilisant cette approche, nous allons pouvoir réutiliser un large panel de techniques initialement développées dans le contexte analogique. Dans le domaine analogique, un filtre est décrit par sa fonction de transfert, $H_a(s)$, où $s$ désigne la variable de Laplace. Dans les sous-sections suivantes, nous allons présenter deux techniques permettant d'approcher la réponse fréquentielle d'un filtre analogique par un filtre numérique. 
+Pour concevoir un filtre numÃ©rique IIR, une technique possible consiste Ã  convertir un filtre analogique. En utilisant cette approche, nous allons pouvoir rÃ©utiliser un large panel de techniques initialement dÃ©veloppÃ©es dans le contexte analogique. Dans le domaine analogique, un filtre est dÃ©crit par sa fonction de transfert, $H_a(s)$, oÃ¹ $s$ dÃ©signe la variable de Laplace. Dans les sous-sections suivantes, nous allons prÃ©senter deux techniques permettant d'approcher la rÃ©ponse frÃ©quentielle d'un filtre analogique par un filtre numÃ©rique. 
 
-Pour illustrer notre section, nous allons utiliser comme référence le filtre analogique suivant.
+Pour illustrer notre section, nous allons utiliser comme rÃ©fÃ©rence le filtre analogique suivant.
 
-\begin{exemple}[Filtre 2] Le filtre analogique 2 est défini par la fonction de transfert suivante
+\begin{exemple}[Filtre 2] Le filtre analogique 2 est dÃ©fini par la fonction de transfert suivante
 \begin{align*}
 H_a(s)&=\frac{10000}{(s-100e^{3j\pi/4})(s-100e^{-3j\pi/4})}
 \end{align*}
 \end{exemple}
-La pulsation de coupure du filtre est égale à $\omega_a=100$ rad/s ($20\log_{10}(|H(\omega_a)|)=-3$dB). Ce filtre sera échantillonné à une fréquence d'échantillonnage $F_e=1$kHz ($T_e=0.001$s).
+La pulsation de coupure du filtre est Ã©gale Ã  $\omega_a=100$ rad/s ($20\log_{10}(|H(\omega_a)|)=-3$dB). Ce filtre sera Ã©chantillonnÃ© Ã  une frÃ©quence d'Ã©chantillonnage $F_e=1$kHz ($T_e=0.001$s).
 
 \subsection{Invariance Impulsionnelle}
 
-\begin{definition}[Invariance Impulsionnelle] La technique de synthèse basée sur l'invariance impulsionnelle est décrite par la procédure suivante
+\begin{definition}[Invariance Impulsionnelle] La technique de synthÃ¨se basÃ©e sur l'invariance impulsionnelle est dÃ©crite par la procÃ©dure suivante
 \begin{enumerate}
-\item Calcul de la réponse impulsionnelle à temps continu: $h_a(t)=\mathcal{L}^{-1}\{H_a(s)\}$ où $\mathcal{L}^{-1}\{.\}$ désigne la transformée de Laplace inverse\footnote{Le plus souvent une décomposition en éléments simples sera nécessaire avant la transformation inverse pour obtenir une somme de formes canoniques}.
-\item Discrétisation de la réponse impulsionnelle: $h[n]=T_e h_a(n T_e)$,  où $T_e$ désigne la période d'échantillonnage.
-\item Détermination de la fonction de transfert en $\mathcal{Z}$, $H(z)=\mathcal{Z}\{h[n]\}$ via le tableau \ref{app_tabZ}.
-\item Obtention de l'équation aux différences à partir de $H(z)$.
+\item Calcul de la rÃ©ponse impulsionnelle Ã  temps continu: $h_a(t)=\mathcal{L}^{-1}\{H_a(s)\}$ oÃ¹ $\mathcal{L}^{-1}\{.\}$ dÃ©signe la transformÃ©e de Laplace inverse\footnote{Le plus souvent une dÃ©composition en Ã©lÃ©ments simples sera nÃ©cessaire avant la transformation inverse pour obtenir une somme de formes canoniques}.
+\item DiscrÃ©tisation de la rÃ©ponse impulsionnelle: $h[n]=T_e h_a(n T_e)$,  oÃ¹ $T_e$ dÃ©signe la pÃ©riode d'Ã©chantillonnage.
+\item DÃ©termination de la fonction de transfert en $\mathcal{Z}$, $H(z)=\mathcal{Z}\{h[n]\}$ via le tableau \ref{app_tabZ}.
+\item Obtention de l'Ã©quation aux diffÃ©rences Ã  partir de $H(z)$.
 \end{enumerate}
 \end{definition}
 
-Dans le cas général, la procédure de synthèse peut être fastidieuse. Toutefois, lorsque la fonction de transfert $H_a(s)$ contient uniquement des pôles de premier ordre, la proposition suivante montre qu'il est possible d'obtenir rapidement l'expression de $H(z)$.
-\begin{proposition}[Pôles de premier ordre]
+Dans le cas gÃ©nÃ©ral, la procÃ©dure de synthÃ¨se peut Ãªtre fastidieuse. Toutefois, lorsque la fonction de transfert $H_a(s)$ contient uniquement des pÃ´les de premier ordre, la proposition suivante montre qu'il est possible d'obtenir rapidement l'expression de $H(z)$.
+\begin{proposition}[PÃ´les de premier ordre]
 \label{prop_ii}
 Lorsque $H_a(s)=\sum_{k=1}^{N} \frac{A_k}{s-s_k}$, la fonction de transfert en $\mathcal{Z}$ du filtre s'exprime sous la forme
 \begin{align}
@@ -444,26 +444,26 @@ H(z)&=\sum_{k=1}^{N} \frac{T_e A_k}{1-e^{s_kT_e}z^{-1}}
 Voir Annexe \ref{a_prop_ii}.
 \end{proof}
 
-La proposition \ref{prop_ii} montre que la synthèse d'un filtre ne contenant que des pôles de premier ordre s'obtient en réalisant un mapping des pôles $s_k \to e^{s_kT_e}$ et en appliquant le coefficient multiplicateur $T_e$. A titre d'illustration, l'utilisation d'une decomposition en éléments simples permet d'écrire le filtre 2 sous la forme
+La proposition \ref{prop_ii} montre que la synthÃ¨se d'un filtre ne contenant que des pÃ´les de premier ordre s'obtient en rÃ©alisant un mapping des pÃ´les $s_k \to e^{s_kT_e}$ et en appliquant le coefficient multiplicateur $T_e$. A titre d'illustration, l'utilisation d'une decomposition en Ã©lÃ©ments simples permet d'Ã©crire le filtre 2 sous la forme
 
 \begin{align*}
 H_a(s)&=\frac{A_1}{s-s_1}+\frac{A_2}{s-s_2}
 \end{align*}
-où $A_1=-A_2=-100j/\sqrt{2}$ et $s_1=s_2^*=100e^{3j\pi/4}$. En utilisant la proposition \ref{prop_ii}, ce filtre peut être approché en numérique par le filtre de fonction de transfert
+oÃ¹ $A_1=-A_2=-100j/\sqrt{2}$ et $s_1=s_2^*=100e^{3j\pi/4}$. En utilisant la proposition \ref{prop_ii}, ce filtre peut Ãªtre approchÃ© en numÃ©rique par le filtre de fonction de transfert
 \begin{align*}
 H(z)&=\frac{0.00931z^{-1}}{1-1.8588z^{-1}+0.8681z^{-2}}
 \end{align*}
-La réponse fréquentielle de ce filtre est présentée sur la figure \ref{fig_comp_iir}. Notons que l'inconvenient majeur de cette technique de synthèse réside dans l'apparition d'un phénomène de repliement du spectre.
+La rÃ©ponse frÃ©quentielle de ce filtre est prÃ©sentÃ©e sur la figure \ref{fig_comp_iir}. Notons que l'inconvenient majeur de cette technique de synthÃ¨se rÃ©side dans l'apparition d'un phÃ©nomÃ¨ne de repliement du spectre.
 
-\subsection{Transformée Bilinéaire}
-Dans le domaine analogique, un filtre est décrit par une équation différentielle. Pour numériser un filtre analogique, une approche possible consiste à utiliser une technique d'intégration numérique basée sur la méthode des trapèzes. Cette approche est nommée transformée bilinéaire. En pratique, la transformée bilinéaire s'obtient simplement en réalisant la substitution $s=c\frac{1-z^{-1}}{1+z^{-1}}$, où $c$ correspond à un paramètre libre du filtre. 
+\subsection{TransformÃ©e BilinÃ©aire}
+Dans le domaine analogique, un filtre est dÃ©crit par une Ã©quation diffÃ©rentielle. Pour numÃ©riser un filtre analogique, une approche possible consiste Ã  utiliser une technique d'intÃ©gration numÃ©rique basÃ©e sur la mÃ©thode des trapÃ¨zes. Cette approche est nommÃ©e transformÃ©e bilinÃ©aire. En pratique, la transformÃ©e bilinÃ©aire s'obtient simplement en rÃ©alisant la substitution $s=c\frac{1-z^{-1}}{1+z^{-1}}$, oÃ¹ $c$ correspond Ã  un paramÃ¨tre libre du filtre. 
 
-\begin{proposition}[Transformée Bilinéaire] En utilisant la transformée Bilinéaire, la fonction de transfert en $\mathcal{Z}$ d'un filtre numérique s'obtient à partir de la fonction de transfert analogique $H_a(z)$ sous la forme
+\begin{proposition}[TransformÃ©e BilinÃ©aire] En utilisant la transformÃ©e BilinÃ©aire, la fonction de transfert en $\mathcal{Z}$ d'un filtre numÃ©rique s'obtient Ã  partir de la fonction de transfert analogique $H_a(z)$ sous la forme
 \begin{align}
 H(z)&=H_a\left(c\frac{1-z^{-1}}{1+z^{-1}}\right)
 \end{align}
 \end{proposition}
-Un point appartenant à l'axe $s=j\omega$ dans le plan de Laplace est déplacé en un point appartenant au cercle de rayon unité $e^{j\omega}$ dans le domaine en $\mathcal{Z}$. De plus, il est démontré dans l'annexe \ref{ap_tf}, qu'après transformation, la pulsation $\omega_a$ dans le domaine continue est déplacée à la pulsation $\omega=\frac{2}{T_e}\textrm{atan}(\omega_a/c)$ dans le domaine numérique. Ce \textit{warping frequentiel} non-linéaire est illustré par la figure \ref{fig_warp} pour $c=T_e=1$. 
+Un point appartenant Ã  l'axe $s=j\omega$ dans le plan de Laplace est dÃ©placÃ© en un point appartenant au cercle de rayon unitÃ© $e^{j\omega}$ dans le domaine en $\mathcal{Z}$. De plus, il est dÃ©montrÃ© dans l'annexe \ref{ap_tf}, qu'aprÃ¨s transformation, la pulsation $\omega_a$ dans le domaine continue est dÃ©placÃ©e Ã  la pulsation $\omega=\frac{2}{T_e}\textrm{atan}(\omega_a/c)$ dans le domaine numÃ©rique. Ce \textit{warping frequentiel} non-linÃ©aire est illustrÃ© par la figure \ref{fig_warp} pour $c=T_e=1$. 
 
 \begin{figure}
 \centering
@@ -474,21 +474,21 @@ Un point appartenant à l'axe $s=j\omega$ dans le plan de Laplace est déplacé en 
 \addplot [dashed] coordinates { (-10,3.14) (10,3.14) } node [below]{$\pi$};
 \end{axis}
 \end{tikzpicture}
-\caption{Transformée Bilinéaire: warping fréquentiel}\label{fig_warp}
+\caption{TransformÃ©e BilinÃ©aire: warping frÃ©quentiel}\label{fig_warp}
 \end{figure}
 
-Le paramètre $c$ est le plus souvent fixé pour faire en sorte que la réponse fréquentielle du filtre numérique corresponde à la réponse fréquentielle du filtre analogique à une pulsation particulière $\omega_0$.
+Le paramÃ¨tre $c$ est le plus souvent fixÃ© pour faire en sorte que la rÃ©ponse frÃ©quentielle du filtre numÃ©rique corresponde Ã  la rÃ©ponse frÃ©quentielle du filtre analogique Ã  une pulsation particuliÃ¨re $\omega_0$.
 
 \begin{proposition}
-A la pulsation $\omega_0$, les réponses fréquentielles des filtres analogique et numérique sont équivalentes si et seulement si $c=\omega_0 / \tan(\omega_0 T_e/2)$.
+A la pulsation $\omega_0$, les rÃ©ponses frÃ©quentielles des filtres analogique et numÃ©rique sont Ã©quivalentes si et seulement si $c=\omega_0 / \tan(\omega_0 T_e/2)$.
 \end{proposition}
 
-A titre d'illustration, pour obtenir équivalence à la pulsation $\omega_0$ entre le filtre 2 et sa version numérisée, la paramètre libre doit être fixé à $c=1998.33$. En appliquant la transformée bilinéaire, nous obtenons alors le filtre numérique décrit par la fonction de transfert en $\mathcal{Z}$ suivante:
+A titre d'illustration, pour obtenir Ã©quivalence Ã  la pulsation $\omega_0$ entre le filtre 2 et sa version numÃ©risÃ©e, la paramÃ¨tre libre doit Ãªtre fixÃ© Ã  $c=1998.33$. En appliquant la transformÃ©e bilinÃ©aire, nous obtenons alors le filtre numÃ©rique dÃ©crit par la fonction de transfert en $\mathcal{Z}$ suivante:
 
 \begin{align}
 H(z)&=\frac{0.00233+0.00466z^{-1}+ 0.00233z^{-2}}{1-1.85879z^{-1}+ 0.86812z^{-2}}
 \end{align}
-La réponse fréquentielle de ce filtre est présentée sur la figure \ref{fig_comp_iir}.
+La rÃ©ponse frÃ©quentielle de ce filtre est prÃ©sentÃ©e sur la figure \ref{fig_comp_iir}.
 
 \begin{figure}[t]
 \centering
@@ -498,23 +498,23 @@ La réponse fréquentielle de ce filtre est présentée sur la figure \ref{fig_comp_
 \addplot+[mark=none,blue,color=red] table[x index=0,y index=2,col sep = comma] {./csv/iir_comp.txt};
 \addplot+[mark=none,color=blue] table[x index=0,y index=3,col sep = comma] {./csv/iir_comp.txt};
 \addplot [dashed] coordinates { (10,-3) (10000,-3) } node[above]{$-3$dB} ;
-\legend{$H_a(s)$,$H(z)$ (invariance),$H(z)$ (bilinéaire)}
+\legend{$H_a(s)$,$H(z)$ (invariance),$H(z)$ (bilinÃ©aire)}
 \end{semilogxaxis}
 \end{tikzpicture}
-\caption{Comparaison de deux techniques de synthèse: invariance impulsionnelle et transformée bilinéaire.}\label{fig_comp_iir}
+\caption{Comparaison de deux techniques de synthÃ¨se: invariance impulsionnelle et transformÃ©e bilinÃ©aire.}\label{fig_comp_iir}
 \end{figure}
 
-\section{Synthèse par modèle de réponse impulsionnelle ou fréquentielle}
+\section{SynthÃ¨se par modÃ¨le de rÃ©ponse impulsionnelle ou frÃ©quentielle}
 \label{s_design_ri}
-Un filtre numérique est décrit par en ensemble de coefficients $b_m$ et $a_k$. Pour synthétiser un filtre, une technique possible consiste à minimiser un critère d'erreur entre la réponse attendue (impulsionnelle ou fréquentielle) et la réponse du filtre. Un critère d'erreur couramment utilisé est l'erreur quadratique. Dans cette partie, nous allons voir comment fixer les coefficients $b_m$ et $a_l$ afin de minimiser l'erreur quadratique entre la réponse impulsionnelle attendue et la réponse impulsionnelle du filtre c-a-d
+Un filtre numÃ©rique est dÃ©crit par en ensemble de coefficients $b_m$ et $a_k$. Pour synthÃ©tiser un filtre, une technique possible consiste Ã  minimiser un critÃ¨re d'erreur entre la rÃ©ponse attendue (impulsionnelle ou frÃ©quentielle) et la rÃ©ponse du filtre. Un critÃ¨re d'erreur couramment utilisÃ© est l'erreur quadratique. Dans cette partie, nous allons voir comment fixer les coefficients $b_m$ et $a_l$ afin de minimiser l'erreur quadratique entre la rÃ©ponse impulsionnelle attendue et la rÃ©ponse impulsionnelle du filtre c-a-d
 \begin{align}
 \epsilon&=\sum_{n=-\infty}^{\infty}(h_d[n]-h[n])^2\label{eq_ref_h}
 \end{align}
-Notons que la réponse impulsionnelle désirée $h_d[n]$ est parfois donnée implicitement via la réponse fréquentielle, $H_d(e^{j\omega})$. Dans le cas, il est nécessaire de calculer $h_d[n]$ via l'expresssion (\ref{e_def_if}).
+Notons que la rÃ©ponse impulsionnelle dÃ©sirÃ©e $h_d[n]$ est parfois donnÃ©e implicitement via la rÃ©ponse frÃ©quentielle, $H_d(e^{j\omega})$. Dans le cas, il est nÃ©cessaire de calculer $h_d[n]$ via l'expresssion (\ref{e_def_if}).
 
-Pour illustrer cette section, nous allons synthétiser le filtre suivant.
+Pour illustrer cette section, nous allons synthÃ©tiser le filtre suivant.
 \begin{exemple}[Filtre 3]
-Le filtre 3 est un filtre passe-bas en mur de brique (pente infinie) comportant une phase linéaire. La réponse fréquentielle de ce filtre est donnée par $H_d(e^{j\omega})=|H_d(e^{j\omega})|e^{-j\omega N/2}$ où
+Le filtre 3 est un filtre passe-bas en mur de brique (pente infinie) comportant une phase linÃ©aire. La rÃ©ponse frÃ©quentielle de ce filtre est donnÃ©e par $H_d(e^{j\omega})=|H_d(e^{j\omega})|e^{-j\omega N/2}$ oÃ¹
 \begin{align}
 |H_d(e^{j\omega})|&=\left\{\begin{array}{cl}
 1&\textrm{, pour } |\omega| \le \omega_a T_e\\
@@ -522,11 +522,11 @@ Le filtre 3 est un filtre passe-bas en mur de brique (pente infinie) comportant 
 \end{align}
 avec $\omega_a=100$ rad/s et $T_e=0.001$s.
 \end{exemple}
-La réponse impulsionnelle du filtre 3 s'obtient en utilisant l'équation (\ref{e_def_if}). Après quelques calculs, nous obtenons
+La rÃ©ponse impulsionnelle du filtre 3 s'obtient en utilisant l'Ã©quation (\ref{e_def_if}). AprÃ¨s quelques calculs, nous obtenons
 \begin{align}
 h_d[n]&=\frac{\sin\left(\omega_a T_e (n-N/2)\right)}{\pi (n-N/2)}
 \end{align}
-La réponse impulsionnelle de ce filtre est présentée dans la figure \ref{fig_fir_ri} pour $N=200$ échantillons.
+La rÃ©ponse impulsionnelle de ce filtre est prÃ©sentÃ©e dans la figure \ref{fig_fir_ri} pour $N=200$ Ã©chantillons.
 \begin{figure}[t]
 \centering
 \begin{tikzpicture}
@@ -534,33 +534,33 @@ La réponse impulsionnelle de ce filtre est présentée dans la figure \ref{fig_fir
 \addplot+[mark=none,color=black] table[x index=0,y index=1,col sep = comma] {./csv/fir_w_ri.txt};
 \end{axis}
 \end{tikzpicture}
-\caption{Réponse Impulsionnelle du filtre 3.}\label{fig_fir_ri}
+\caption{RÃ©ponse Impulsionnelle du filtre 3.}\label{fig_fir_ri}
 \end{figure}
 
-\subsection{Filtres FIR (Technique par fenêtrage)}
+\subsection{Filtres FIR (Technique par fenÃªtrage)}
 
-Mathématiquement, un filtre FIR d'ordre $M=N$ est modélisé par la relation
+MathÃ©matiquement, un filtre FIR d'ordre $M=N$ est modÃ©lisÃ© par la relation
 \begin{align}
 y[n]=\sum_{m=0}^{M} b_m x[n-m]
 \end{align}
-La réponse impulsionnelle d'un filtre FIR est donnée par
+La rÃ©ponse impulsionnelle d'un filtre FIR est donnÃ©e par
 \begin{align}
 h[n]=\left\{\begin{array}{cl}b_n&\textrm{ pour }0\le n \le M\\
 0& \textrm{ ailleurs}
 \end{array}\right.
 \end{align}
-Dans ce contexte, la minimisation de l'erreur quadratique $\epsilon$ dans (\ref{eq_ref_h}) s'obtient facilement en imposant l'égalité $b_m=h_d[m]$ dans l'intervalle $0\le m \le M$. Cette technique est couramment appelée technique de synthèse par fenêtrage car la réponse impulsionnelle obtenue correspond à la réponse impulsionnelle attendue multipliée par une fenêtre rectangulaire. Notons qu'il est possible de généraliser cette technique en remplaçant la fenêtre rectangulaire par une fenêtre de pondération $w[m]$ afin de limiter l'effet de la troncature en temps.
-\begin{proposition}[Technique de synthèse par fenêtrage]
-La technique de synthèse par fenêtrage s'obtient en fixant 
+Dans ce contexte, la minimisation de l'erreur quadratique $\epsilon$ dans (\ref{eq_ref_h}) s'obtient facilement en imposant l'Ã©galitÃ© $b_m=h_d[m]$ dans l'intervalle $0\le m \le M$. Cette technique est couramment appelÃ©e technique de synthÃ¨se par fenÃªtrage car la rÃ©ponse impulsionnelle obtenue correspond Ã  la rÃ©ponse impulsionnelle attendue multipliÃ©e par une fenÃªtre rectangulaire. Notons qu'il est possible de gÃ©nÃ©raliser cette technique en remplaÃ§ant la fenÃªtre rectangulaire par une fenÃªtre de pondÃ©ration $w[m]$ afin de limiter l'effet de la troncature en temps.
+\begin{proposition}[Technique de synthÃ¨se par fenÃªtrage]
+La technique de synthÃ¨se par fenÃªtrage s'obtient en fixant 
 \begin{align}
 \widehat{b}_m=\left\{\begin{array}{cl}w[m]h_d[m]&\textrm{ pour }0\le m \le M\\
 0& \textrm{ ailleurs}
 \end{array}\right.
 \end{align}
-où $w[m]$ est une fenêtre de pondération.
+oÃ¹ $w[m]$ est une fenÃªtre de pondÃ©ration.
 \end{proposition}
 
-La figure \ref{fig_comp_fir} présente l'allure de la réponse fréquentielle obtenue pour la synthèse du Filtre 3. Cette figure compare les résultats obtenus avec trois fenêtres de pondération différentes (rectangulaire, Hamming et Blackman). Nous pouvons observer un compromis entre la raideur de la pente du filtre et l'amplitude des lobes secondaires.
+La figure \ref{fig_comp_fir} prÃ©sente l'allure de la rÃ©ponse frÃ©quentielle obtenue pour la synthÃ¨se du Filtre 3. Cette figure compare les rÃ©sultats obtenus avec trois fenÃªtres de pondÃ©ration diffÃ©rentes (rectangulaire, Hamming et Blackman). Nous pouvons observer un compromis entre la raideur de la pente du filtre et l'amplitude des lobes secondaires.
 \begin{figure}[t]
 \centering
 \begin{tikzpicture}
@@ -571,34 +571,34 @@ La figure \ref{fig_comp_fir} présente l'allure de la réponse fréquentielle obten
 \legend{Rectangulaire,Hamming, Blackman}
 \end{semilogxaxis}
 \end{tikzpicture}
-\caption{Technique de synthèse par fenêtrage. Influence de la fenêtre de pondération ($M=200$)}\label{fig_comp_fir}
+\caption{Technique de synthÃ¨se par fenÃªtrage. Influence de la fenÃªtre de pondÃ©ration ($M=200$)}\label{fig_comp_fir}
 \end{figure}
 
 
 \subsection{Filtre IIR}
-Mathématiquement, un filtre IIR est modélisé par la relation
+MathÃ©matiquement, un filtre IIR est modÃ©lisÃ© par la relation
 \begin{align}
 y[n]=\sum_{k=0}^{M} b_m x[n-m]-\sum_{l=1}^{L}a_l y[n-l]
 \end{align}
-La réponse impulsionnelle d'un filtre IIR s'obtient par récurrence via l'expression
+La rÃ©ponse impulsionnelle d'un filtre IIR s'obtient par rÃ©currence via l'expression
 \begin{align}
 h[n]=\sum_{k=0}^{M} b_m \delta[n-m]-\sum_{l=1}^{L}a_l h[n-l]
 \end{align}
-La technique de synthèse optimale consiste à minimiser l'erreur quadratique $\epsilon$ par rapport aux coefficients de la partie récursive et non-récursive du filtre. Cette technique de synthèse est toutefois difficile à mettre en oeuvre car elle nécessite de minimiser une fonction multimodale dans un espace de dimension $L+M+1$. 
+La technique de synthÃ¨se optimale consiste Ã  minimiser l'erreur quadratique $\epsilon$ par rapport aux coefficients de la partie rÃ©cursive et non-rÃ©cursive du filtre. Cette technique de synthÃ¨se est toutefois difficile Ã  mettre en oeuvre car elle nÃ©cessite de minimiser une fonction multimodale dans un espace de dimension $L+M+1$. 
 
-Pour simplifier le problème, une technique alternative consiste à minimiser, au lieu de l'erreur $\epsilon$, l'erreur quadratique \textit{tronquée et filtrée} définie par
+Pour simplifier le problÃ¨me, une technique alternative consiste Ã  minimiser, au lieu de l'erreur $\epsilon$, l'erreur quadratique \textit{tronquÃ©e et filtrÃ©e} dÃ©finie par
 \begin{align}
 \epsilon_f&=\sum_{n=0}^{N-1}(h_{df}[n]-b[n])^2\label{eq_ref_h2}
 \end{align}
-où $h_{df}[n]=\sum_{l=0}^{L}a_l h_d[n-l]$ et $a_0=1$. Lorsque $N$ est suffisamment grand, cette technique permet d'obtenir une réponse impulsionnelle proche de la réponse impulsionnelle attendue. Cette approche est couramment appelée méthode de Prony en référence à son inventeur. En utilisant cette approche, il est démontré en annexe \ref{ap_prony} que les coefficients $a_l$ et $b_m$ s'obtiennent de la manière suivante.
+oÃ¹ $h_{df}[n]=\sum_{l=0}^{L}a_l h_d[n-l]$ et $a_0=1$. Lorsque $N$ est suffisamment grand, cette technique permet d'obtenir une rÃ©ponse impulsionnelle proche de la rÃ©ponse impulsionnelle attendue. Cette approche est couramment appelÃ©e mÃ©thode de Prony en rÃ©fÃ©rence Ã  son inventeur. En utilisant cette approche, il est dÃ©montrÃ© en annexe \ref{ap_prony} que les coefficients $a_l$ et $b_m$ s'obtiennent de la maniÃ¨re suivante.
 
-\begin{proposition}[Technique de synthèse par la méthode de Prony]\label{prop_prony}
-La technique de synthèse par la méthode Prony s'obtient en imposant les coefficients $\widehat{\textbf{a}}=[\widehat{a}_1,\cdots,\widehat{a}_L]^T$ et $\widehat{\textbf{b}}=[\widehat{b}_0,\cdots,\widehat{b}_M]^T$ suivants
+\begin{proposition}[Technique de synthÃ¨se par la mÃ©thode de Prony]\label{prop_prony}
+La technique de synthÃ¨se par la mÃ©thode Prony s'obtient en imposant les coefficients $\widehat{\textbf{a}}=[\widehat{a}_1,\cdots,\widehat{a}_L]^T$ et $\widehat{\textbf{b}}=[\widehat{b}_0,\cdots,\widehat{b}_M]^T$ suivants
 \begin{align}
 \widehat{\textbf{a}}&=(\textbf{H}^T\textbf{H})^{-1}\textbf{H}^T\textbf{x}\\
 \widehat{\textbf{b}}&=\textbf{h}+\textbf{H}_0\widehat{\textbf{a}}
 \end{align}
-où
+oÃ¹
 \begin{align*}
 \textbf{H}_0&=\begin{bmatrix} 0&0&\cdots&0\\
 h_d[0]&0&\cdots&0\\
@@ -616,7 +616,7 @@ h_d[N-2]&h_d[N-3]&\cdots&h_d[N-1-L]\\
 \end{align*}
 \end{proposition}
 
-La figure \ref{fig_iir_prony} présente la réponse fréquentielle obtenue avec la méthode de Prony pour la synthèse du Filtre 3 avec un filtre IIR d'ordre $6$. Même si cette technique de sythèse est relativement simple, nous pouvons constater des oscillations importantes en basse-fréquence. 
+La figure \ref{fig_iir_prony} prÃ©sente la rÃ©ponse frÃ©quentielle obtenue avec la mÃ©thode de Prony pour la synthÃ¨se du Filtre 3 avec un filtre IIR d'ordre $6$. MÃªme si cette technique de sythÃ¨se est relativement simple, nous pouvons constater des oscillations importantes en basse-frÃ©quence. 
 
 \begin{figure}[t]
 \centering
@@ -625,7 +625,7 @@ La figure \ref{fig_iir_prony} présente la réponse fréquentielle obtenue avec la 
 \addplot+[mark=none,color=blue] table[x index=0,y index=1,col sep = comma] {./csv/iir_prony_rf.txt};
 \end{semilogxaxis}
 \end{tikzpicture}
-\caption{Technique de synthèse de filtres par la méthode de Prony ($M=L=6$, $N=200$)}\label{fig_iir_prony}
+\caption{Technique de synthÃ¨se de filtres par la mÃ©thode de Prony ($M=L=6$, $N=200$)}\label{fig_iir_prony}
 \end{figure}
 
 
@@ -633,9 +633,9 @@ La figure \ref{fig_iir_prony} présente la réponse fréquentielle obtenue avec la 
  
 \appendices
 
-\section{Quelques signaux numériques}
+\section{Quelques signaux numÃ©riques}
 \label{app_sig}
-La figure \ref{fig_sig} présente l'allure de quelques signaux numériques. Ces signaux sont définis mathématiquement sous la forme:
+La figure \ref{fig_sig} prÃ©sente l'allure de quelques signaux numÃ©riques. Ces signaux sont dÃ©finis mathÃ©matiquement sous la forme:
 \begin{itemize}
 \item Impulsion:
 \begin{align*}
@@ -705,10 +705,10 @@ x[n]&=a \sin(\omega n+\phi) u[n]
 
 
 
-\section{Démonstration de la proposition \ref{prop0}}
+\section{DÃ©monstration de la proposition \ref{prop0}}
 \label{dprop0}
 
-Notons $y[n]=T_n\{x[.]\}$ le $n^{ieme}$ échantillon en sortie d'un filtre lorsqu'un signal $x[n]$ ($n\in \mathbb{Z}$) est appliqué en entrée. L'entrée du filtre peut être décomposé sous la forme $x[n]=\sum_{k=-\infty}^{\infty} x[k] \delta[n-k]$. En utilisant la propriété de linéarité, puis d'invariance dans le temps des systèmes LTI, il en vient que
+Notons $y[n]=T_n\{x[.]\}$ le $n^{ieme}$ Ã©chantillon en sortie d'un filtre lorsqu'un signal $x[n]$ ($n\in \mathbb{Z}$) est appliquÃ© en entrÃ©e. L'entrÃ©e du filtre peut Ãªtre dÃ©composÃ© sous la forme $x[n]=\sum_{k=-\infty}^{\infty} x[k] \delta[n-k]$. En utilisant la propriÃ©tÃ© de linÃ©aritÃ©, puis d'invariance dans le temps des systÃ¨mes LTI, il en vient que
 
 \begin{align}
 y[n]&=T_n\left\{x[.]\right\}\\
@@ -716,12 +716,12 @@ y[n]&=T_n\left\{x[.]\right\}\\
 &=\sum_{k=-\infty}^{\infty} x[k] T_{n-k}\{\delta[.]\}\\
 &=\sum_{k=-\infty}^{\infty} x[k] h[n-k]
 \end{align}
-où $h[n]=T_n\{\delta[.]\}$ correspond à la réponse impulsionnelle du filtre.
+oÃ¹ $h[n]=T_n\{\delta[.]\}$ correspond Ã  la rÃ©ponse impulsionnelle du filtre.
 
-\section{Démonstration de la proposition \ref{prop_ft}}
+\section{DÃ©monstration de la proposition \ref{prop_ft}}
 \label{dprop_ft}
 
-En appliquant la transformée en $\mathcal{Z}$ de part et d'autre de l'équation (\ref{filtre1}) et en appliquant la propriété de Linéarité de la transformée en $\mathcal{Z}$, nous obtenons
+En appliquant la transformÃ©e en $\mathcal{Z}$ de part et d'autre de l'Ã©quation (\ref{filtre1}) et en appliquant la propriÃ©tÃ© de LinÃ©aritÃ© de la transformÃ©e en $\mathcal{Z}$, nous obtenons
  \begin{align*}
  a_0Y(z)&=\sum_{m=0}^{M}b_m z^{-m} X(z) -\sum_{l=1}^{L}a_l z^{-l}Y(z).
   \end{align*}
@@ -734,34 +734,34 @@ En appliquant la transformée en $\mathcal{Z}$ de part et d'autre de l'équation (
  \frac{Y(z)}{X(z)}&=\frac{\sum_{m=0}^{M}b_m z^{-m}}{\sum_{l=0}^{L}a_l z^{-l}}.
  \end{align*}
  
-\section{Démonstration de la proposition \ref{prop1}}
+\section{DÃ©monstration de la proposition \ref{prop1}}
 \label{dprop1}
-En appliquant la transformée en $\mathcal{Z}$ au filtre (\ref{filtre1}) et en fixant $a_0=1$, nous obtenons 
+En appliquant la transformÃ©e en $\mathcal{Z}$ au filtre (\ref{filtre1}) et en fixant $a_0=1$, nous obtenons 
 \begin{align*}
 &Y(z)=\sum_{m=0}^{M}b_m X(z)z^{-m}-\sum_{l=1}^{L}a_l Y(z)z^{-l}\\
 &Y(z)\left(\sum_{l=0}^{L}a_l z^{-l}\right)=X(z) \left(\sum_{m=0}^{M}b_m z^{-m}\right)
 \end{align*}
-La fonction de transfert est alors égal à 
+La fonction de transfert est alors Ã©gal Ã  
 
 \begin{align*}
 H(z)\triangleq \frac{Y(z)}{X(z)}=\frac{\sum_{m=0}^{M}b_m z^{-m}}{\sum_{l=0}^{L}a_l z^{-l}}
 \end{align*}
 
-\section{Démonstration de la proposition \ref{prop1}}
+\section{DÃ©monstration de la proposition \ref{prop1}}
 \label{dprop1}
-Considérons la fonction de transfert suivante:
+ConsidÃ©rons la fonction de transfert suivante:
 \begin{align*}
 H(z)=\left(\frac{b_0}{a_0}\right)\frac{\prod_{k=1}^{M}(1-c_k z^{-1})}{\prod_{l=1}^{N}(1-d_l z^{-1})}
 \end{align*}
-Sous l'hypothèse que les pôles ne sont pas multiples\footnote{Si les pôles ne sont pas multiples, alors $d_k\ne d_l$ pour tout $k\ne l$.} et que $M<N$, la fonction de transfert peut se décomposer en éléments simples sous la forme
+Sous l'hypothÃ¨se que les pÃ´les ne sont pas multiples\footnote{Si les pÃ´les ne sont pas multiples, alors $d_k\ne d_l$ pour tout $k\ne l$.} et que $M<N$, la fonction de transfert peut se dÃ©composer en Ã©lÃ©ments simples sous la forme
 \begin{align}
 H(z)=\sum_{l=1}^{N} \frac{r_l}{1-d_l z^{-1}}
 \end{align}
-où les résidus $r_l$ s'obtiennent via l'expression $r_l=(1-d_l z^{-1})H(z)|_{z=c_l}$. La réponse impulsionnelle $h[n]$ du système s'obtient en inversant la transformée en $\mathcal{Z}$. En utilisant le tableau~\ref{app_tabZ} des transformées en $\mathcal{Z}$, il en vient que 
+oÃ¹ les rÃ©sidus $r_l$ s'obtiennent via l'expression $r_l=(1-d_l z^{-1})H(z)|_{z=c_l}$. La rÃ©ponse impulsionnelle $h[n]$ du systÃ¨me s'obtient en inversant la transformÃ©e en $\mathcal{Z}$. En utilisant le tableau~\ref{app_tabZ} des transformÃ©es en $\mathcal{Z}$, il en vient que 
 \begin{align}
 h[n]&=\sum_{l=1}^{N} r_l d_l^n u[n]
 \end{align}
-Le filtre est stable si la réponse impulsionnelle est absolument sommable c-a-d si $\sum_{n=-\infty}^{\infty}|h[n]|<\infty$. Or,
+Le filtre est stable si la rÃ©ponse impulsionnelle est absolument sommable c-a-d si $\sum_{n=-\infty}^{\infty}|h[n]|<\infty$. Or,
 \begin{align}
 \sum_{n=-\infty}^{\infty} |h[n]|&\le \sum_{n=0}^{\infty} \sum_{l=1}^{N} \left| r_l \right| \left|d_l \right|^n\\
 &=\sum_{l=1}^{N} \left| r_l \right| \sum_{n=0}^{\infty}  \left|d_l \right|^n < \infty
@@ -769,9 +769,9 @@ Le filtre est stable si la réponse impulsionnelle est absolument sommable c-a-d 
 Pour que $\sum_{n=-\infty}^{\infty}|h[n]|<\infty$, il suffit que $|d_l|<1$ pour tout $l$.
 
 
-\section{Propriété du produit de convolution}
+\section{PropriÃ©tÃ© du produit de convolution}
 \label{dprop2}
-Nous allons montrer que les exponentielles complexes $x[n]=e^{j\omega n}$ sont les invariants du produit de convolution. En utilisant la définition du produit de convolution, nous trouvons
+Nous allons montrer que les exponentielles complexes $x[n]=e^{j\omega n}$ sont les invariants du produit de convolution. En utilisant la dÃ©finition du produit de convolution, nous trouvons
 \begin{align}
 y[n]&= \sum_{k=-\infty}^{\infty}e^{j\omega k}h[n-k]\\
 &= \sum_{m=+\infty}^{-\infty}e^{j\omega (-m+n)}h[m]\\
@@ -780,16 +780,16 @@ y[n]&= \sum_{k=-\infty}^{\infty}e^{j\omega k}h[n-k]\\
 \end{align}
 
 
-\section{Démonstration de la propriété \ref{prop_f}}
+\section{DÃ©monstration de la propriÃ©tÃ© \ref{prop_f}}
 \label{dprop_f}
-En utilisant la définition de $X(e^{j\omega})$, nous obtenons
+En utilisant la dÃ©finition de $X(e^{j\omega})$, nous obtenons
 
 \begin{align*}
 \int_{-\pi}^{\pi} X(e^{j\omega})e^{j\omega n}d\omega&=\int_{-\pi}^{\pi} \sum_{m=-\infty}^{\infty}x[m]e^{j\omega (n-m)}d\omega\\
 &= \sum_{m=-\infty}^{\infty}x[m]\int_{-\pi}^{\pi}e^{j\omega (n-m)}d\omega\\
 &= \sum_{m=-\infty}^{\infty}x[m]I_{n-m}
 \end{align*}
-où $I_{k}\triangleq \int_{-\pi}^{\pi}e^{jk\omega }d\omega$ et $k\in \mathbb{Z}$. La valeur de l'intégrale $I_{k}$ dépend de la valeur de $k$. Deux cas de figure peuvent se présenter.
+oÃ¹ $I_{k}\triangleq \int_{-\pi}^{\pi}e^{jk\omega }d\omega$ et $k\in \mathbb{Z}$. La valeur de l'intÃ©grale $I_{k}$ dÃ©pend de la valeur de $k$. Deux cas de figure peuvent se prÃ©senter.
 \begin{itemize}
 \item Si $k=0$, alors $I_{0}=[\omega]_{-\pi}^{\pi}=2\pi$.
 \item Si $k\ne 0$, alors 
@@ -806,13 +806,13 @@ Il en vient que $I_{k}=2\pi\delta[k]$ et donc
 &=x[n].
 \end{align*}
 
-\section{Démonstration de la proposition \ref{prop_ii}}
+\section{DÃ©monstration de la proposition \ref{prop_ii}}
 \label{a_prop_ii}
-Considérons une fonction de transfert "analogique" ne contenant que des pôles de premier ordre c-a-d
+ConsidÃ©rons une fonction de transfert "analogique" ne contenant que des pÃ´les de premier ordre c-a-d
 \begin{align}
 H_a(s)&=\sum_{k=1}^{N} \frac{A_k}{s-s_k}
 \end{align}
-En appliquant la transformée de Laplace inverse, nous obtenons la réponse impulsionnelle continue suivante
+En appliquant la transformÃ©e de Laplace inverse, nous obtenons la rÃ©ponse impulsionnelle continue suivante
 \begin{align}
 h_a(t)&=\left\{
 \begin{array}{lc}
@@ -820,7 +820,7 @@ h_a(t)&=\left\{
 0&,~t<0
 \end{array}\right.  
 \end{align}
-En échantillonnant $h(t)$ avec une période d'échantillonnage $T_e$, nous obtenons
+En Ã©chantillonnant $h(t)$ avec une pÃ©riode d'Ã©chantillonnage $T_e$, nous obtenons
 \begin{align}
 h[n]&=T_e h_a(t T_e)\\
 &=\sum_{k=1}^{N}T_e A_k e^{s_k n T_e}u[n]\\
@@ -831,9 +831,9 @@ En utilisant le tableau \ref{app_tabZ}, nous obtenons finalement la fonction de 
 H(z)&=\sum_{k=1}^{N} \frac{T_e A_k}{1-e^{s_kT_e}z^{-1}}.
 \end{align}
 
-\section{Transformée Bilinéaire}
+\section{TransformÃ©e BilinÃ©aire}
 \label{ap_tf}
-La transformée bilinéaire s'obtient en réalisant la substitution
+La transformÃ©e bilinÃ©aire s'obtient en rÃ©alisant la substitution
 \begin{align}
 s&=c\frac{1-z^{-1}}{1+z^{-1}}
 \end{align}
@@ -841,33 +841,33 @@ Le passage du plan de Laplace vers le domaine en $\mathcal{Z}$ s'obtient alors v
 \begin{align}
 z^{-1}&=\frac{1-s/c}{1+s/c}\label{ap_eq_bil_0}
 \end{align}
-Dans le domaine de Laplace, le domaine fréquentiel s'obtient en posant $s=j\omega_a$. En posant $s=j\omega_a$ dans l'équation (\ref{ap_eq_bil_0}), nous obtenons $|z|=1$. L'axe des imaginaires purs dans le domaine de Laplace est donc transformé en un cercle de rayon unité dans le domaine en $\mathcal{Z}$. De plus, il en vient que 
+Dans le domaine de Laplace, le domaine frÃ©quentiel s'obtient en posant $s=j\omega_a$. En posant $s=j\omega_a$ dans l'Ã©quation (\ref{ap_eq_bil_0}), nous obtenons $|z|=1$. L'axe des imaginaires purs dans le domaine de Laplace est donc transformÃ© en un cercle de rayon unitÃ© dans le domaine en $\mathcal{Z}$. De plus, il en vient que 
 \begin{align}
 j\omega_a&=c\frac{1-e^{-j\omega T_e}}{1+z^{-j\omega T_e}}\\
 &=c\frac{e^{j\omega T_e/2}-e^{-j\omega T_e/2}}{e^{j\omega T_e/2}+e^{-j\omega T_e/2}}\\
 &=jc\frac{\sin(\omega T_e/2)}{\cos(\omega T_e/2)}\\
 &=jc\tan(\omega T_e/2)
 \end{align}
-La pulsation $\omega_a$ dans le domaine continue est donc déplacé à la pulsation $c\tan(\omega T_e/2)$ dans le domaine numérique. De même, la pulsation numérique $\omega$ correspond à la pulsation $\frac{2}{T_e}\textrm{atan}(\omega_a /c)$ dans le domaine analogique.
+La pulsation $\omega_a$ dans le domaine continue est donc dÃ©placÃ© Ã  la pulsation $c\tan(\omega T_e/2)$ dans le domaine numÃ©rique. De mÃªme, la pulsation numÃ©rique $\omega$ correspond Ã  la pulsation $\frac{2}{T_e}\textrm{atan}(\omega_a /c)$ dans le domaine analogique.
 
 \section{Technique de Prony}
 \label{ap_prony}
 
-En utilisant l'expression de $h_{df}[n]$, l'erreur tronquée et filtrée $\epsilon_f$ peut se reexprimer sous la forme
+En utilisant l'expression de $h_{df}[n]$, l'erreur tronquÃ©e et filtrÃ©e $\epsilon_f$ peut se reexprimer sous la forme
 \begin{align}
 \epsilon_f&=\sum_{n=0}^{N-1}\left(\sum_{l=0}^{L}a_l h_d[n-l]-b[n]\right)^2\\
 &=\sum_{n=0}^{N-1}\left[h_d[n]-\left(-\sum_{l=1}^{L}a_l h_d[n-l]+b[n]\right)\right]^2
 \end{align}
-Comme $b_m=0$ pour tout $k>M$, la somme peut se décomposer en deux parties:
+Comme $b_m=0$ pour tout $k>M$, la somme peut se dÃ©composer en deux parties:
 \begin{align}
 \epsilon_f&=\sum_{n=0}^{M}\left[h_d[n]-\left(-\sum_{l=1}^{L}a_l h_d[n-l]+b[n]\right)\right]^2\nonumber\\
 &+\sum_{n=M+1}^{N-1}\left[h_d[n]-\left(-\sum_{l=1}^{L}a_l h_d[n-l]\right)\right]^2\\
 \end{align}
-En utilisant les notations matricielles de la propriété \ref{prop_prony}, nous obtenons
+En utilisant les notations matricielles de la propriÃ©tÃ© \ref{prop_prony}, nous obtenons
 \begin{align}
 \epsilon_f&=\left\|\textbf{h}+\textbf{H}_0\textbf{a}-\textbf{b}\right \|^2+\left\| \textbf{x}-\textbf{H}\textbf{a}\right \|^2
 \end{align}
-La première partie est minimisée quelque soit $\textbf{a}$ pour $\widehat{\textbf{b}}=\textbf{h}+\textbf{H}_0\textbf{a}$. En remplacant cette valeur dans l'expression de l'erreur, nous obtenons l'erreur quadratique $\epsilon_f=\left\|\textbf{x}-\textbf{H}\textbf{a}\right\|^2$. Cette erreur est ensuite minimisée en fixant $\widehat{\textbf{a}}=\left(\textbf{H}^T\textbf{H}\right)^{-1}\textbf{H}\textbf{x}$.
+La premiÃ¨re partie est minimisÃ©e quelque soit $\textbf{a}$ pour $\widehat{\textbf{b}}=\textbf{h}+\textbf{H}_0\textbf{a}$. En remplacant cette valeur dans l'expression de l'erreur, nous obtenons l'erreur quadratique $\epsilon_f=\left\|\textbf{x}-\textbf{H}\textbf{a}\right\|^2$. Cette erreur est ensuite minimisÃ©e en fixant $\widehat{\textbf{a}}=\left(\textbf{H}^T\textbf{H}\right)^{-1}\textbf{H}\textbf{x}$.
 
 
 \begin{thebibliography}{9}
